@@ -136,11 +136,11 @@ const switchToTeam = (team) => {
 
         <!-- Right Hand Side (Account Information & Teams) -->
         <div class="col-span-4 md:col-span-1 bg-white p-4 rounded-lg shadow order-1 md:order-2">
-            <h3 class="text-xl font-semibold mb-4">Account Information</h3>
+            <h3 class="text-xl font-semibold mb-2">Account Information</h3>
             <p><strong>Name:</strong> {{ $page.props.auth.user.name }}</p>
             <p><strong>Email:</strong> {{ $page.props.auth.user.email }}</p>
 
-            <h3 class="text-xl font-semibold mt-6 mb-4">Teams</h3>
+            <h3 class="text-xl font-semibold mt-6 mb-2">Teams</h3>
             <ul class="space-y-2">
                 <li v-for="team in $page.props.auth.user.all_teams" :key="team.id" class="flex justify-between items-center bg-white p-3 rounded shadow">
                         <span><a @click="switchToTeam(team)">{{ team.name }}</a></span>
@@ -148,8 +148,49 @@ const switchToTeam = (team) => {
                         <span class="text-gray-600" v-else-if="team.personal_team">Role: owner</span>
                 </li>
             </ul>
+            <a-divider/>
+            <h3 class="text-xl font-semibold my-2">Current Team</h3>
+            <div class="flex justify-between items-center bg-white">
+                {{ $page.props.auth.user.current_team.name }}
+            </div>
+            <h3 class="text-xl font-semibold my-2">Recent Update</h3>
+            <ul>
+                <li>Invited xxx</li>
+                <li>Invited update yyy</li>
+                <li>Invited create zzz</li>
+            </ul>
         </div>
     </div>
 
+    <div class="pt-5">
+        <div class="bg-white p-4 rounded-lg shadow order-2 md:order-1">
+            
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section id="services" class="bg-white rounded-lg shadown py-5">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-amber-800">Our Core Services</h2>
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-amber-600">Expert Consultation</h3>
+                    <p class="mt-2 text-gray-600">Connect with seasoned professionals for tailored advice and strategies.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-amber-600">AI-Powered Mediation Tools</h3>
+                    <p class="mt-2 text-gray-600">Utilize advanced tools to facilitate communication and negotiation.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-amber-600">Community Support Network</h3>
+                    <p class="mt-2 text-gray-600">Join a vibrant community to share insights and resources.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-amber-600">Training & Development</h3>
+                    <p class="mt-2 text-gray-600">Access workshops and courses to enhance your conflict resolution skills.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </template>
