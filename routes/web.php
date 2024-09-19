@@ -24,6 +24,9 @@ Route::get('/', function () {
     ]);
 });
 
+Route::resource('registration', App\Http\Controllers\RegistrationController::class)->names('registration');
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
