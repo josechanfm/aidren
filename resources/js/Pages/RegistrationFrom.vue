@@ -10,13 +10,13 @@ export default {
   data() {
     return {
       dateFormat: "YYYY-MM-DD",
-      formState:{user: {
-            name: '',
-            age: undefined,
-            email: '',
-            website: '',
-            introduction: '',
-        },
+      user: {
+        name: '',
+        age: undefined,
+        email: '',
+        country: '',
+        timezone: '',
+        introduction: '',
       },
       modal: {
         isOpen: false,
@@ -62,15 +62,10 @@ export default {
           range: "${label} must be between ${min} and ${max}",
         },
       },
-      layout:{
-         labelCol: {
-            span: 4,
-        },
-        wrapperCol: {
-            span: 20,
-        },
-      }
-      
+      layout: {
+        labelCol: { span: 6 },
+        wrapperCol: { span: 18 },
+      },
     };
   },
   created() {
@@ -88,30 +83,37 @@ export default {
 
 
     <!-- About Section -->
-    <section class="max-w-7xl mx-auto py-20 px-4">
+    <section class="max-w-3xl mx-auto py-20 px-4">
         <a-form
             :model="formState"
-            v-bind="layout"
-            name="nest-messages"
+            :label-col="layout.labelCol"
+            :wrapper-col="layout.wrapperCol"
+            name="registration-form"
             :validate-messages="validateMessages"
             @finish="onFinish"
         >
-            <a-form-item :name="['user', 'name']" label="Name" :rules="[{ required: true }]">
-                <a-input v-model:value="formState.user.name" type="input" />
+            <a-form-item name="name" label="Name" :rules="[{ required: true }]">
+                <a-input v-model:value="user.name" type="input" />
             </a-form-item>
-            <a-form-item :name="['user', 'email']" label="Email" :rules="[{ type: 'email' }]">
-                <a-input v-model:value="formState.user.email" type="input" />
+            <a-form-item name="email" label="Email" :rules="[{ type: 'email' }]">
+                <a-input v-model:value="user.email" type="input" />
             </a-form-item>
-            <a-form-item :name="['user', 'age']" label="Age" :rules="[{ type: 'number', min: 0, max: 99 }]">
-                <a-input-number v-model:value="formState.user.age" type="input" />
+            <a-row :gutter="16">
+                <a-col :span="12">
+                    <a-form-item name="country" label="Country">
+                        <a-input v-model:value="user.country" type="input" />
+                    </a-form-item>
+                </a-col>
+                <a-col :span="12">
+                    <a-form-item name="timezone" label="Timezone">
+                        <a-input v-model:value="user.timezone" type="input" />
+                    </a-form-item>
+                </a-col>
+            </a-row>
+            <a-form-item name="introduction" label="Introduction">
+                <a-textarea v-model:value="user.introduction" />
             </a-form-item>
-            <a-form-item :name="['user', 'website']" label="Website">
-                <a-input v-model:value="formState.user.website" type="input" />
-            </a-form-item>
-            <a-form-item :name="['user', 'introduction']" label="Introduction">
-                <a-textarea v-model:value="formState.user.introduction" type="input" />
-            </a-form-item>
-            <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
+            <a-form-item :wrapper-col="{ span: 18, offset: 6 }">
                 <a-button type="primary" html-type="submit">Submit</a-button>
             </a-form-item>
         </a-form>
@@ -127,13 +129,19 @@ export default {
     </WebLayout>
 </template>
 
-<style>
-.bg-dots-darker {
-    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");
+<style scoped>
+.ant-form-item {
+    margin-bottom: 24px;
 }
-@media (prefers-color-scheme: dark) {
-    .dark\:bg-dots-lighter {
-        background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
-    }
+
+/* Add these styles to adjust the layout for Country and Timezone */
+.ant-row .ant-form-item .ant-form-item-label {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+}
+
+.ant-row .ant-form-item .ant-form-item-control {
+    flex: 0 0 66.67%;
+    max-width: 66.67%;
 }
 </style>

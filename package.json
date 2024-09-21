@@ -19,6 +19,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "ant-design-vue": "^4.2.5"
+        "ant-design-vue": "^4.2.5",
+        "swiper": "^11.1.14"
     }
 }

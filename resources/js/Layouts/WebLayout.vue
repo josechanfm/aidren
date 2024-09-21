@@ -8,6 +8,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import { Link as InertiaLink } from '@inertiajs/vue3';
 
 defineProps({
     title: String,
@@ -38,7 +39,7 @@ const logout = () => {
                     <ApplicationLogo class="block h-12 w-auto" />
                     <div>
                         <a href="#services" class="hover:text-amber-600 mx-4">Services</a>
-                        <a href="#about" class=" hover:text-amber-600 mx-4">About Us</a>
+                        <a :href="route('about-us')" class=" hover:text-amber-600 mx-4">About Us</a>
                         <a href="#contact" class="hover:text-amber-600 mx-4">Contact</a>
                         <template v-if="$page.props.auth.user">
                             <a href="dashboard" class="hover:text-amber-600 mx-4">Dashboard</a>

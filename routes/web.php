@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\AboutUsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ Route::get('/', function () {
 
 Route::resource('registration', App\Http\Controllers\RegistrationController::class)->names('registration');
 
+Route::get('/about-us', [AboutUsController::class, 'index'])->name('about-us');
 
 Route::middleware([
     'auth:sanctum',
