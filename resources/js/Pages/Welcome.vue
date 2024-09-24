@@ -1,4 +1,5 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import WebLayout from '@/Layouts/WebLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -14,165 +15,189 @@ defineProps({
     phpVersion: String,
 });
 
+const slides = ref([
+  {
+    type: 'video',
+    src: 'https://player.vimeo.com/external/496296003.sd.mp4?s=1b8f0f3d7c4b7e0d6b9c8f7e3e3f3e3f3e3f3e3f&profile_id=165&oauth2_token_id=57447761',
+    title: 'Empowering Resolution Through Innovation',
+    description: 'Join our community of experts dedicated to resolving disputes efficiently and effectively.',
+    buttonText: 'Explore Services',
+    buttonLink: '/services'
+  },
+  {
+    type: 'image',
+    src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+    title: 'Expert Mediation Services',
+    description: 'Our skilled mediators help resolve conflicts with professionalism and care.',
+    buttonText: 'Meet Our Experts',
+    buttonLink: '/mediators'
+  },
+  {
+    type: 'image',
+    src: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80',
+    title: 'Collaborative Problem Solving',
+    description: 'We facilitate open dialogue to find mutually beneficial solutions.',
+    buttonText: 'Our Approach',
+    buttonLink: '/approach'
+  }
+]);
+
+onMounted(() => {
+  const video = document.querySelector('video');
+  if (video) {
+    video.addEventListener('error', (e) => {
+      console.error('Video error:', e);
+    });
+    
+    video.addEventListener('loadeddata', () => {
+      console.log('Video loaded successfully');
+    });
+  }
+});
 </script>
 
 <template>
     <WebLayout title="Dashboard">
+        <swiper :modules="[Navigation]" :navigation="true" :loop="true" class="mySwiper">
+            <swiper-slide v-for="(slide, index) in slides" :key="index">
+                <header class="relative bg-amber-800 text-white h-[500px] py-20 overflow-hidden">
+                    <video 
+                      v-if="slide.type === 'video'" 
+                      autoplay 
+                      loop 
+                      muted 
+                      playsinline 
+                      class="absolute inset-0 w-full h-full object-cover z-0"
+                      @error="(e) => console.error('Video error:', e)"
+                      poster="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg"
+                    >
+                        <source :src="slide.src" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div v-else class="absolute inset-0 bg-cover bg-center" :style="{ backgroundImage: `url(${slide.src})` }"></div>
+                    <!-- Gray Overlay -->
+                    <div class="absolute inset-0 bg-gray-800 opacity-60 z-10"></div>
+                    <div class="max-w-7xl mx-auto text-center relative z-20">
+                        <h1 class="text-4xl font-bold">{{ slide.title }}</h1>
+                        <p class="mt-4 text-lg">{{ slide.description }}</p>
+                        <a :href="slide.buttonLink" class="mt-6 inline-block bg-white text-indigo-600 font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-gray-100">
+                            {{ slide.buttonText }}
+                        </a>
+                    </div>
+                </header>
+            </swiper-slide>
+        </swiper>
 
+        <!-- About Section -->
+        <section id="about" class="max-w-7xl mx-auto py-20 px-4">
+            <h2 class="text-3xl font-bold text-center text-amber-800">About Us</h2>
+            <p class="mt-4 text-gray-600 text-center text-xl">
+                Our AI-powered Dispute Resolution Expert Network connects individuals and organizations with skilled professionals.
+                We leverage cutting-edge technology to streamline the resolution process, making it faster, fairer, and more accessible for everyone.
+            </p>
+        </section>
 
-  <swiper :modules="[Navigation]" :navigation="true" :loop="true" class="mySwiper">
-    <swiper-slide>
-      <header class="relative bg-amber-800 text-white h-[500px] py-20 overflow-hidden">
-        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
-          <source src="/images/AIDREN_Front.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-        <!-- Gray Overlay -->
-        <div class="absolute inset-0 bg-gray-800 opacity-60 z-10"></div>
-        <div class="max-w-7xl mx-auto text-center relative z-20">
-          <h1 class="text-4xl font-bold">Empowering Resolution Through Innovation</h1>
-          <p class="mt-4 text-lg">Join our community of experts dedicated to resolving disputes efficiently and effectively.</p>
-          <a href="#services" class="mt-6 inline-block bg-white text-indigo-600 font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-gray-100">Explore Services</a>
-        </div>
-      </header>
-    </swiper-slide>
-    
-    <swiper-slide>
-      <header class="relative bg-gray-500 text-white h-[500px] py-20 overflow-hidden">
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/banner1.jpg');"></div>
-        <div class="max-w-7xl mx-auto text-center relative z-20">
-          <h1 class="text-4xl font-bold">Second Slide Title</h1>
-          <p class="mt-4 text-lg">Description for the second slide.</p>
-          <a href="#services" class="mt-6 inline-block bg-white text-indigo-600 font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-gray-100">Explore Services</a>
-        </div>
-      </header>
-    </swiper-slide>
-
-    <swiper-slide>
-      <header class="relative bg-gray-500 text-white h-[500px] py-20 overflow-hidden">
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/banner2.jpg');"></div>
-        <div class="max-w-7xl mx-auto text-center relative z-20">
-          <h1 class="text-4xl font-bold">Third Slide Title</h1>
-          <p class="mt-4 text-lg">Description for the third slide.</p>
-          <a href="#services" class="mt-6 inline-block bg-white text-indigo-600 font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-gray-100">Explore Services</a>
-        </div>
-      </header>
-    </swiper-slide>
-
-    <!-- Add more slides as needed -->
-  </swiper>
-
-
-    <!-- About Section -->
-    <section id="about" class="max-w-7xl mx-auto py-20 px-4">
-        <h2 class="text-3xl font-bold text-center text-amber-800">About Us</h2>
-        <p class="mt-4 text-gray-600 text-center">
-            Our AI-powered Dispute Resolution Expert Network connects individuals and organizations with skilled professionals.
-            We leverage cutting-edge technology to streamline the resolution process, making it faster, fairer, and more accessible for everyone.
-        </p>
-    </section>
-
-    <!-- Intro Section -->
-    <section id="intro" class="max-w-7xl mx-auto py-20 px-4">
-        <a-row >
-            <a-col :span="8" class="h-64"
-                :style="{
-                    backgroundImage: 'url(/images/image1.jpg)',
-                    backgroundSize: 'cover', // Cover the entire column
-                    backgroundPosition: 'center', // Center the image
-                }"
-            ></a-col>
-            <a-col :span="16" class="h-64"
-                :style="{
-                    backgroundImage: 'url(/images/image2.jpg)',
-                    backgroundSize: 'cover', // Cover the entire column
-                    backgroundPosition: 'center', // Center the image
-                }"
-            ></a-col>
-        </a-row>
-        <a-row >
-            <a-col :span="8" class="bg-red-100 h-64 p-10">
-                <a-typography-title :level="3">Want to discuss working with GLG?</a-typography-title>
-                <p>Find out how you can become a client and begin acting with confidence that comes from true clarity.</p>
-                <a-button>CONTACT US</a-button>
-            </a-col>
-            <a-col :span="16" class="bg-white h-64 p-10">
-                <a-typography-title :level="3">Interested in becoming a Network Member?</a-typography-title>
-                <p>The world’s leading organizations trust our network of experts to help them move forward. GLG Network Members get to shape the direction of progress.</p>
-                <a-button>GET START</a-button>
-            </a-col>
-        </a-row>
-        <a-row >
-            <a-col :span="8" class="bg-slate-500 text-white p-10 h-[400px]">
-                <a-typography-title :level="3" :style="{ color: 'white' }">Interested in working for GLG?</a-typography-title>
-                <p>GLG is hiring for critical roles. Check out our careers page and be a part of bringing the power of insight to every great professional decision.</p>
-                <a-button>BROWSE OPEN POSITIONS</a-button>
-            </a-col>
-            <a-col :span="8" class="bg-green-100  h-[400px]"
-                :style="{
-                    backgroundImage: 'url(/images/image3.jpg)',
-                    backgroundSize: 'cover', // Cover the entire column
-                    backgroundPosition: 'center', // Center the image
-                }"
-            ></a-col>
-            <a-col :span="8" class="bg-stash-400 h-[400px]">
-                <a-col class=" h-[200px]"
-                :style="{
-                    backgroundImage: 'url(/images/image2.jpg)',
-                    backgroundSize: 'cover', // Cover the entire column
-                    backgroundPosition: 'center', // Center the image
-                }"
+        <!-- Intro Section -->
+        <section id="intro" class="max-w-7xl mx-auto py-20 px-4">
+            <a-row >
+                <a-col :span="8" class="h-64"
+                    :style="{
+                        backgroundImage: 'url(/images/image1.jpg)',
+                        backgroundSize: 'cover', // Cover the entire column
+                        backgroundPosition: 'center', // Center the image
+                    }"
                 ></a-col>
-                <a-col class="bg-gray-900 p-10 font text-white  h-[200px]">
-                    <a-typography-title :level="3" :style="{ color: 'white' }">What does GLG do?</a-typography-title>
-                    <p>GLG is The World’s Insight Network, bringing decision makers the insight it takes to get ahead.</p>
+                <a-col :span="16" class="h-64"
+                    :style="{
+                        backgroundImage: 'url(/images/image2.jpg)',
+                        backgroundSize: 'cover', // Cover the entire column
+                        backgroundPosition: 'center', // Center the image
+                    }"
+                ></a-col>
+            </a-row>
+            <a-row >
+                <a-col :span="8" class="bg-red-100 h-64 p-10">
+                    <a-typography-title :level="3">Want to discuss working with GLG?</a-typography-title>
+                    <p>Find out how you can become a client and begin acting with confidence that comes from true clarity.</p>
+                    <a-button>CONTACT US</a-button>
+                </a-col>
+                <a-col :span="16" class="bg-white h-64 p-10">
+                    <a-typography-title :level="3">Interested in becoming a Network Member?</a-typography-title>
+                    <p>The world's leading organizations trust our network of experts to help them move forward. GLG Network Members get to shape the direction of progress.</p>
+                    <a-button>GET START</a-button>
+                </a-col>
+            </a-row>
+            <a-row >
+                <a-col :span="8" class="bg-slate-500 text-white p-10 h-[400px]">
+                    <a-typography-title :level="3" :style="{ color: 'white' }">Interested in working for GLG?</a-typography-title>
+                    <p>GLG is hiring for critical roles. Check out our careers page and be a part of bringing the power of insight to every great professional decision.</p>
                     <a-button>BROWSE OPEN POSITIONS</a-button>
                 </a-col>
-            </a-col>
-        </a-row>
-    </section>
+                <a-col :span="8" class="bg-green-100  h-[400px]"
+                    :style="{
+                        backgroundImage: 'url(/images/image3.jpg)',
+                        backgroundSize: 'cover', // Cover the entire column
+                        backgroundPosition: 'center', // Center the image
+                    }"
+                ></a-col>
+                <a-col :span="8" class="bg-stash-400 h-[400px]">
+                    <a-col class=" h-[200px]"
+                    :style="{
+                        backgroundImage: 'url(/images/image2.jpg)',
+                        backgroundSize: 'cover', // Cover the entire column
+                        backgroundPosition: 'center', // Center the image
+                    }"
+                    ></a-col>
+                    <a-col class="bg-gray-900 p-10 font text-white  h-[200px]">
+                        <a-typography-title :level="3" :style="{ color: 'white' }">What does GLG do?</a-typography-title>
+                        <p>GLG is The World's Insight Network, bringing decision makers the insight it takes to get ahead.</p>
+                        <a-button>BROWSE OPEN POSITIONS</a-button>
+                    </a-col>
+                </a-col>
+            </a-row>
+        </section>
 
 
-    <!-- Services Section -->
-    <section id="services" class="bg-gray-200 py-20">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-amber-800">Our Core Services</h2>
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-amber-600">Expert Consultation</h3>
-                    <p class="mt-2 text-gray-600">Connect with seasoned professionals for tailored advice and strategies.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-amber-600">AI-Powered Mediation Tools</h3>
-                    <p class="mt-2 text-gray-600">Utilize advanced tools to facilitate communication and negotiation.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-amber-600">Community Support Network</h3>
-                    <p class="mt-2 text-gray-600">Join a vibrant community to share insights and resources.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-amber-600">Training & Development</h3>
-                    <p class="mt-2 text-gray-600">Access workshops and courses to enhance your conflict resolution skills.</p>
+        <!-- Services Section -->
+        <section id="services" class="bg-gray-200 py-20">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-amber-800">Our Core Services</h2>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-semibold text-amber-600">Expert Consultation</h3>
+                        <p class="mt-2 text-gray-600">Connect with seasoned professionals for tailored advice and strategies.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-semibold text-amber-600">AI-Powered Mediation Tools</h3>
+                        <p class="mt-2 text-gray-600">Utilize advanced tools to facilitate communication and negotiation.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-semibold text-amber-600">Community Support Network</h3>
+                        <p class="mt-2 text-gray-600">Join a vibrant community to share insights and resources.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-semibold text-amber-600">Training & Development</h3>
+                        <p class="mt-2 text-gray-600">Access workshops and courses to enhance your conflict resolution skills.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="max-w-7xl mx-auto py-20 px-4">
-        <h2 class="text-3xl font-bold text-center text-amber-800">Get in Touch</h2>
-        <p class="mt-4 text-gray-600 text-center">Have questions? We’d love to hear from you!</p>
-        <div class="mt-6 text-center">
-            <a href="mailto:info@disputeexpert.com" class="bg-amber-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-amber-500">Contact Us</a>
-        </div>
-    </section>
+        <!-- Contact Section -->
+        <section id="contact" class="max-w-7xl mx-auto py-20 px-4">
+            <h2 class="text-3xl font-bold text-center text-amber-800">Get in Touch</h2>
+            <p class="mt-4 text-gray-600 text-center">Have questions? We'd love to hear from you!</p>
+            <div class="mt-6 text-center">
+                <a href="mailto:info@disputeexpert.com" class="bg-amber-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-amber-500">Contact Us</a>
+            </div>
+        </section>
 
-    <!-- Footer -->
-    <footer class="bg-amber-800 text-white py-4">
-        <div class="max-w-7xl mx-auto text-center">
-            <p>&copy; 2024 AI Dispute Resolution Expert Network. All rights reserved.</p>
-        </div>
-    </footer>
+        <!-- Footer -->
+        <footer class="bg-amber-800 text-white py-4">
+            <div class="max-w-7xl mx-auto text-center">
+                <p>&copy; 2024 AI Dispute Resolution Expert Network. All rights reserved.</p>
+            </div>
+        </footer>
     </WebLayout>
 </template>
 
@@ -200,5 +225,12 @@ defineProps({
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Add this new style */
+video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -12,7 +12,7 @@ class RegistrationController extends Controller
      */
     public function index()
     {
-        return Inertia::render('RegistrationFrom',[
+        return Inertia::render('Auth/RegistrationForm',[
             
         ]);
     }

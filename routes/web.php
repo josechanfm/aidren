@@ -3,7 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +24,19 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 
 Route::resource('registration', App\Http\Controllers\RegistrationController::class)->names('registration');
 
-Route::get('/about-us', [AboutUsController::class, 'index'])->name('about-us');
+Route::get('/services', [PageController::class, 'servcies'])->name('services');
+Route::get('/mediators', [PageController::class, 'mediators'])->name('mediators');
+Route::get('/about-us', [PageController::class, 'aboutUs'])->name('aboutUs');
+Route::get('/contact', function () {
+    return Inertia::render('Contact');
+})->name('contact');
+Route::get('/approach', [PageController::class, 'approach'])->name('approach');
+
+Route::post('/contact', [ContactController::class, 'submit']);
 
 Route::middleware([
     'auth:sanctum',
