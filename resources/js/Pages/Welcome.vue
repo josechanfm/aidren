@@ -38,7 +38,7 @@ const slides = ref([
     title: 'Collaborative Problem Solving',
     description: 'We facilitate open dialogue to find mutually beneficial solutions.',
     buttonText: 'Our Approach',
-    buttonLink: '/approach'
+    buttonLink: '/abo'
   }
 ]);
 
@@ -95,68 +95,46 @@ onMounted(() => {
                 Our AI-powered Dispute Resolution Expert Network connects individuals and organizations with skilled professionals.
                 We leverage cutting-edge technology to streamline the resolution process, making it faster, fairer, and more accessible for everyone.
             </p>
+            <p class="mt-4 text-gray-600 text-center text-xl">
+                Endorsed by the Department of Justice of Hong Kong and supported by HK EBRAM.
+            </p>
         </section>
 
         <!-- Intro Section -->
         <section id="intro" class="max-w-7xl mx-auto py-20 px-4">
-            <a-row >
-                <a-col :span="8" class="h-64"
-                    :style="{
-                        backgroundImage: 'url(/images/image1.jpg)',
-                        backgroundSize: 'cover', // Cover the entire column
-                        backgroundPosition: 'center', // Center the image
-                    }"
-                ></a-col>
-                <a-col :span="16" class="h-64"
-                    :style="{
-                        backgroundImage: 'url(/images/image2.jpg)',
-                        backgroundSize: 'cover', // Cover the entire column
-                        backgroundPosition: 'center', // Center the image
-                    }"
-                ></a-col>
-            </a-row>
-            <a-row >
-                <a-col :span="8" class="bg-red-100 h-64 p-10">
-                    <a-typography-title :level="3">Want to discuss working with GLG?</a-typography-title>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="h-64 bg-cover bg-center" :style="{ backgroundImage: 'url(/images/image1.jpg)' }"></div>
+                <div class="h-64 bg-cover bg-center" :style="{ backgroundImage: 'url(/images/image2.jpg)' }"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div class="bg-red-100 min-h-[300px] p-10">
+                    <h3 class="text-2xl font-semibold mb-4">Want to discuss working with AIDREN?</h3>
                     <p>Find out how you can become a client and begin acting with confidence that comes from true clarity.</p>
-                    <a-button>CONTACT US</a-button>
-                </a-col>
-                <a-col :span="16" class="bg-white h-64 p-10">
-                    <a-typography-title :level="3">Interested in becoming a Network Member?</a-typography-title>
-                    <p>The world's leading organizations trust our network of experts to help them move forward. GLG Network Members get to shape the direction of progress.</p>
-                    <a-button>GET START</a-button>
-                </a-col>
-            </a-row>
-            <a-row >
-                <a-col :span="8" class="bg-slate-500 text-white p-10 h-[400px]">
-                    <a-typography-title :level="3" :style="{ color: 'white' }">Interested in working for GLG?</a-typography-title>
-                    <p>GLG is hiring for critical roles. Check out our careers page and be a part of bringing the power of insight to every great professional decision.</p>
-                    <a-button>BROWSE OPEN POSITIONS</a-button>
-                </a-col>
-                <a-col :span="8" class="bg-green-100  h-[400px]"
-                    :style="{
-                        backgroundImage: 'url(/images/image3.jpg)',
-                        backgroundSize: 'cover', // Cover the entire column
-                        backgroundPosition: 'center', // Center the image
-                    }"
-                ></a-col>
-                <a-col :span="8" class="bg-stash-400 h-[400px]">
-                    <a-col class=" h-[200px]"
-                    :style="{
-                        backgroundImage: 'url(/images/image2.jpg)',
-                        backgroundSize: 'cover', // Cover the entire column
-                        backgroundPosition: 'center', // Center the image
-                    }"
-                    ></a-col>
-                    <a-col class="bg-gray-900 p-10 font text-white  h-[200px]">
-                        <a-typography-title :level="3" :style="{ color: 'white' }">What does GLG do?</a-typography-title>
-                        <p>GLG is The World's Insight Network, bringing decision makers the insight it takes to get ahead.</p>
-                        <a-button>BROWSE OPEN POSITIONS</a-button>
-                    </a-col>
-                </a-col>
-            </a-row>
+                    <a href="#" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">CONTACT US</a>
+                </div>
+                <div class="bg-white min-h-[300px] p-10">
+                    <h3 class="text-2xl font-semibold mb-4">Interested in becoming a Network Member?</h3>
+                    <p>The world's leading organizations trust our network of experts to help them move forward. AIDREN Network Members get to shape the direction of progress.</p>
+                    <a href="#" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">GET START</a>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                <div class="bg-slate-500 text-white p-10 min-h-[300px]">
+                    <h3 class="text-2xl font-semibold mb-4">Interested in working for AIDREN?</h3>
+                    <p>AIDREN is hiring for critical roles. Check out our careers page and be a part of bringing the power of insight to every great professional decision.</p>
+                    <a href="#" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">BROWSE OPEN POSITIONS</a>
+                </div>
+                <div class="bg-green-100 min-h-[300px] bg-cover bg-center" :style="{ backgroundImage: 'url(/images/image3.jpg)' }"></div>
+                <div class="bg-stash-400 min-h-[300px]">
+                    <div class="h-1/2 bg-cover bg-center" :style="{ backgroundImage: 'url(/images/image2.jpg)' }"></div>
+                    <div class="bg-gray-900 py-2 px-10 text-white h-1/2">
+                        <h3 class="text-2xl font-semibold mb-1">What does AIDREN do?</h3>
+                        <p class="mb-2">AIDREN is The World's Insight Network, bringing decision makers the insight it takes to get ahead.</p>
+                        <a href="#" class="inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">BROWSE OPEN POSITIONS</a>
+                    </div>
+                </div>
+            </div>
         </section>
-
 
         <!-- Services Section -->
         <section id="services" class="bg-gray-200 py-20">

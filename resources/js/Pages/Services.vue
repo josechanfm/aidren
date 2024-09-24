@@ -79,7 +79,7 @@ const testimonials = [
 
                 <!-- Testimonials Section -->
                 <section class="mt-32 mb-32 relative overflow-hidden">
-                    <div class="max-w-7xl mx-auto">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="relative z-10 bg-white rounded-3xl shadow-xl overflow-hidden">
                             <div class="absolute inset-0 bg-indigo-100 opacity-70" style="background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png'); background-repeat: repeat;"></div>
                             <div class="relative z-20 py-20 px-8">
