@@ -19,7 +19,7 @@ const toggleMenu = () => {
         <Head :title="title" />
         <div class="min-h-screen bg-gray-100">
             <!-- Navbar -->
-            <nav class="bg-amber-100 shadow">
+            <nav style="background-color: #D2C6B6;" class="border-b border-gray-100">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">
@@ -34,11 +34,11 @@ const toggleMenu = () => {
                             <Link :href="route('aboutUs')" class="text-amber-800 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium">About Us</Link>
                             <Link :href="route('contact')" class="text-amber-800 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium">Contact</Link>
                             <template v-if="$page.props.auth.user">
-                                <Link :href="route('dashboard')" class="text-amber-800 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium">Dashboard</Link>
+                                <Link :href="route('member.dashboard')" class="text-amber-800 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium">Dashboard</Link>
                             </template>
                             <template v-else>
                                 <Link :href="route('login')" class="text-amber-800 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium">Login</Link>
-                                <Link :href="route('register')" class="text-amber-800 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium">Register</Link>
+                                <Link :href="route('registration.index')" class="text-amber-800 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium">Register</Link>
                             </template>
                         </div>
                         <div class="-mr-2 flex items-center sm:hidden">
@@ -62,7 +62,7 @@ const toggleMenu = () => {
                         <Link :href="route('aboutUs')" class="text-amber-800 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium">About Us</Link>
                         <Link :href="route('contact')" class="text-amber-800 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium">Contact</Link>
                         <template v-if="$page.props.auth.user">
-                            <Link :href="route('dashboard')" class="text-amber-800 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium">Dashboard</Link>
+                            <Link :href="route('member.dashboard')" class="text-amber-800 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium">Dashboard</Link>
                         </template>
                         <template v-else>
                             <Link :href="route('login')" class="text-amber-800 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium">Login</Link>

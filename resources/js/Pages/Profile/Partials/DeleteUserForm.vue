@@ -1,12 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import ActionSection from '@/Components/ActionSection.vue';
-import DangerButton from '@/Components/DangerButton.vue';
-import DialogModal from '@/Components/DialogModal.vue';
-import InputError from '@/Components/InputError.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
@@ -32,71 +26,53 @@ const deleteUser = () => {
 
 const closeModal = () => {
     confirmingUserDeletion.value = false;
-
     form.reset();
 };
 </script>
 
 <template>
-    <ActionSection>
-        <template #title>
-            Delete Account
-        </template>
+    <a-row :gutter="16">
+        <a-col :span="12">
+            <h3 class="text-lg font-medium text-gray-900">Delete Account</h3>
+            <p class="mt-1 text-sm text-gray-600">
+                Permanently delete your account.
+            </p>
+        </a-col>
 
-        <template #description>
-            Permanently delete your account.
-        </template>
-
-        <template #content>
-            <div class="max-w-xl text-sm text-gray-600">
+        <a-col :span="12">
+            <p class="mt-1 text-sm text-gray-600">
                 Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
-            </div>
+            </p>
 
             <div class="mt-5">
-                <DangerButton @click="confirmUserDeletion">
+                <a-button type="primary" danger @click="confirmUserDeletion">
                     Delete Account
-                </DangerButton>
+                </a-button>
             </div>
 
             <!-- Delete Account Confirmation Modal -->
-            <DialogModal :show="confirmingUserDeletion" @close="closeModal">
-                <template #title>
-                    Delete Account
-                </template>
-
-                <template #content>
+            <a-modal
+                v-model:visible="confirmingUserDeletion"
+                title="Delete Account"
+                @ok="deleteUser"
+                @cancel="closeModal"
+                :okButtonProps="{ danger: true, loading: form.processing }"
+                okText="Delete Account"
+                cancelText="Cancel"
+            >
+                <p class="text-sm text-gray-600">
                     Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
+                </p>
 
-                    <div class="mt-4">
-                        <TextInput
-                            ref="passwordInput"
-                            v-model="form.password"
-                            type="password"
-                            class="mt-1 block w-3/4"
-                            placeholder="Password"
-                            autocomplete="current-password"
-                            @keyup.enter="deleteUser"
-                        />
-
-                        <InputError :message="form.errors.password" class="mt-2" />
-                    </div>
-                </template>
-
-                <template #footer>
-                    <SecondaryButton @click="closeModal">
-                        Cancel
-                    </SecondaryButton>
-
-                    <DangerButton
-                        class="ms-3"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                        @click="deleteUser"
-                    >
-                        Delete Account
-                    </DangerButton>
-                </template>
-            </DialogModal>
-        </template>
-    </ActionSection>
+                <a-form-item class="mt-4">
+                    <a-input-password
+                        ref="passwordInput"
+                        v-model:value="form.password"
+                        placeholder="Password"
+                        @keyup.enter="deleteUser"
+                    />
+                </a-form-item>
+            </a-modal>
+        </a-col>
+    </a-row>
 </template>

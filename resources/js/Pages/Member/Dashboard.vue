@@ -1,4 +1,5 @@
 <script setup>
+import AppLayout from '@/Layouts/AppLayout.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 
@@ -12,7 +13,8 @@ const switchToTeam = (team) => {
 </script>
 
 <template>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <AppLayout title="Dashboard">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 p-5">
         <!-- Left Hand Side (Content) -->
         <div class="col-span-4 md:col-span-3 bg-white p-4 rounded-lg shadow order-2 md:order-1">
             <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
@@ -39,7 +41,6 @@ const switchToTeam = (team) => {
                             <a href="https://laravel.com/docs">Expert Consultation</a>
                         </h2>
                     </div>
-
                     <p class="mt-4 text-gray-500 text-sm leading-relaxed">
                         Connect with seasoned dispute resolution professionals who provide tailored advice and
                         strategies to navigate your specific challenges.
@@ -71,12 +72,10 @@ const switchToTeam = (team) => {
                             <a href="https://laracasts.com">AI-Powered Mediation Tools</a>
                         </h2>
                     </div>
-
                     <p class="mt-4 text-gray-500 text-sm leading-relaxed">
                         Utilize advanced AI tools designed to facilitate communication and negotiation, helping parties
                         reach mutually beneficial agreements.
                     </p>
-
                     <p class="mt-4 text-sm">
                         <a href="https://laracasts.com" class="inline-flex items-center font-semibold text-indigo-700">
                             Start watching
@@ -90,7 +89,6 @@ const switchToTeam = (team) => {
                         </a>
                     </p>
                 </div>
-
                 <div>
                     <div class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -102,12 +100,10 @@ const switchToTeam = (team) => {
                             <a href="https://tailwindcss.com/">Community Support Network</a>
                         </h2>
                     </div>
-
                     <p class="mt-4 text-gray-500 text-sm leading-relaxed">
                         Join a vibrant community of experts and peers, sharing insights, experiences, and resources to
                         enhance your dispute resolution journey. </p>
                 </div>
-
                 <div>
                     <div class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -119,16 +115,13 @@ const switchToTeam = (team) => {
                             Training & Development
                         </h2>
                     </div>
-
                     <p class="mt-4 text-gray-500 text-sm leading-relaxed">
                         Access workshops and courses led by industry leaders to improve your skills in conflict
                         management and resolution, empowering you for future challenges.
                     </p>
                 </div>
             </div>
-
         </div>
-
         <!-- Right Hand Side (Account Information & Teams) -->
         <div class="col-span-4 md:col-span-1 bg-white p-4 rounded-lg shadow order-1 md:order-2">
             <h3 class="text-xl font-semibold mb-2">Account Information</h3>
@@ -156,10 +149,8 @@ const switchToTeam = (team) => {
             </ul>
         </div>
     </div>
-
     <div class="pt-5">
         <div class="bg-white p-4 rounded-lg shadow order-2 md:order-1">
-            
         </div>
     </div>
 
@@ -187,5 +178,5 @@ const switchToTeam = (team) => {
             </div>
         </div>
     </section>
-
+    </AppLayout>
 </template>

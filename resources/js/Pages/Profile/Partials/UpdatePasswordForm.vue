@@ -1,12 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
-import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
@@ -27,7 +21,6 @@ const updatePassword = () => {
                 form.reset('password', 'password_confirmation');
                 passwordInput.value.focus();
             }
-
             if (form.errors.current_password) {
                 form.reset('current_password');
                 currentPasswordInput.value.focus();
@@ -38,63 +31,67 @@ const updatePassword = () => {
 </script>
 
 <template>
-    <FormSection @submitted="updatePassword">
-        <template #title>
-            Update Password
-        </template>
+    <a-row :gutter="16">
+        <a-col :span="12">
+            <h3 class="text-lg font-medium text-gray-900">Update Password</h3>
+            <p class="mt-1 text-sm text-gray-600">
+                Ensure your account is using a long, random password to stay secure.
+            </p>
+        </a-col>
 
-        <template #description>
-            Ensure your account is using a long, random password to stay secure.
-        </template>
+        <a-col :span="12">
+            <a-form :model="form" @finish="updatePassword">
+                <a-form-item
+                    label="Current Password"
+                    name="current_password"
+                    :rules="[{ required: true, message: 'Please input your current password!' }]"
+                >
+                    <a-input-password
+                        ref="currentPasswordInput"
+                        v-model:value="form.current_password"
+                        autocomplete="current-password"
+                    />
+                </a-form-item>
 
-        <template #form>
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="current_password" value="Current Password" />
-                <TextInput
-                    id="current_password"
-                    ref="currentPasswordInput"
-                    v-model="form.current_password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="current-password"
-                />
-                <InputError :message="form.errors.current_password" class="mt-2" />
-            </div>
+                <a-form-item
+                    label="New Password"
+                    name="password"
+                    :rules="[{ required: true, message: 'Please input your new password!' }]"
+                >
+                    <a-input-password
+                        ref="passwordInput"
+                        v-model:value="form.password"
+                        autocomplete="new-password"
+                    />
+                </a-form-item>
 
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="password" value="New Password" />
-                <TextInput
-                    id="password"
-                    ref="passwordInput"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                />
-                <InputError :message="form.errors.password" class="mt-2" />
-            </div>
+                <a-form-item
+                    label="Confirm Password"
+                    name="password_confirmation"
+                    :rules="[
+                        { required: true, message: 'Please confirm your new password!' },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (!value || getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject('The two passwords do not match!');
+                            },
+                        }),
+                    ]"
+                >
+                    <a-input-password
+                        v-model:value="form.password_confirmation"
+                        autocomplete="new-password"
+                    />
+                </a-form-item>
 
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                />
-                <InputError :message="form.errors.password_confirmation" class="mt-2" />
-            </div>
-        </template>
-
-        <template #actions>
-            <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                Saved.
-            </ActionMessage>
-
-            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
-            </PrimaryButton>
-        </template>
-    </FormSection>
+                <a-form-item>
+                    <a-button type="primary" html-type="submit" :loading="form.processing">
+                        Save
+                    </a-button>
+                </a-form-item>
+            </a-form>
+        </a-col>
+    </a-row>
 </template>

@@ -26,4 +26,7 @@ class PageController extends Controller
     {
         return Inertia::render('Approach');
     }
+    public function contactSubmit(Request $request){
+        dd($request->all());
+    }
 }
