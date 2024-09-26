@@ -26,7 +26,7 @@ const form = useForm({
 const editExperience = (experience) => {
   console.log('editExperience function called', experience);
   form.id = experience.id;
-  form.title = experience.title;
+  form.position = experience.position;
   form.company = experience.company;
   form.start_date = experience.start_date;
   form.end_date = experience.end_date;
@@ -144,8 +144,8 @@ const columns = [
       @cancel="cancelModal"
     >
       <a-form :model="form" layout="vertical">
-        <a-form-item label="Position" name="title">
-          <a-input type="input" v-model:value="form.title" />
+        <a-form-item label="Position" name="position">
+          <a-input type="input" v-model:value="form.position" />
         </a-form-item>
         <a-form-item label="Company" name="company">
           <a-input type="input" v-model:value="form.company" />
