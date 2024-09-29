@@ -8,6 +8,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Member\DashboardController;
 use App\Http\Controllers\Member\PortfolioController;
 use App\Http\Controllers\Member\ExperienceController;
+use App\Http\Controllers\ChatbotController;
 
 //use App\Http\Controllers\Auth\PasswordController;
 
@@ -56,6 +57,11 @@ Route::middleware([
         //Route::get('/user/profile', [ProfileController::class, 'show'])->name('profile.show');
     }
 );
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/chatbot', [ChatbotController::class, 'index'])->name('chatbot');
+    Route::post('/chatbot/chat', [ChatbotController::class, 'chat'])->name('chatbot.chat');
+    Route::post('/chat', [ChatbotController::class, 'chat'])->name('chat');
+});
 
 // Route::post('/user/confirm-password', [PasswordController::class, 'confirm'])
 //     ->name('password.confirm');
