@@ -8,11 +8,16 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Member\DashboardController;
 use App\Http\Controllers\Member\PortfolioController;
 use App\Http\Controllers\Member\ExperienceController;
+<<<<<<< HEAD
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PrivateMessageController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Models\News;
+=======
+use App\Http\Controllers\ChatbotController;
+
+>>>>>>> 54b8652db0bae3c542bdf4b01692f124c3b39c7a
 //use App\Http\Controllers\Auth\PasswordController;
 
 /*
@@ -63,6 +68,11 @@ Route::middleware([
         //Route::get('/user/profile', [ProfileController::class, 'show'])->name('profile.show');
     }
 );
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/chatbot', [ChatbotController::class, 'index'])->name('chatbot');
+    Route::post('/chatbot/chat', [ChatbotController::class, 'chat'])->name('chatbot.chat');
+    Route::post('/chat', [ChatbotController::class, 'chat'])->name('chat');
+});
 
 Route::middleware([
     'auth:sanctum',
