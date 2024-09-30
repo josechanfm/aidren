@@ -13,6 +13,7 @@ defineProps({
     canRegister: Boolean,
     laravelVersion: String,
     phpVersion: String,
+    news: Object
 });
 
 const slides = ref([
@@ -54,6 +55,7 @@ onMounted(() => {
     });
   }
 });
+
 </script>
 
 <template>
@@ -87,6 +89,33 @@ onMounted(() => {
                 </header>
             </swiper-slide>
         </swiper>
+
+        <!-- News Section -->
+        <section class="py-12 bg-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-8">Latest News</h2>
+                <div class="space-y-6">
+                    <div v-for="item in news" :key="item.id" class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col sm:flex-row">
+                        <div class="sm:w-1/4 md:w-1/5">
+                            <img :src="item.image" :alt="item.title" class="w-full h-48 sm:h-full object-cover">
+                        </div>
+                        <div class="p-4 sm:w-3/4 md:w-4/5">
+                            <h3 class="font-bold text-xl mb-2">{{ item.title }}</h3>
+                            <p class="text-gray-600 mb-4">{{ item.content }}</p>
+                            <a :href="route('admin.news.show', item.id)" class="text-blue-500 hover:underline">Read more</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <inertia-link 
+                        :href="route('admin.news.index')" 
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                    >
+                        View All News
+                    </inertia-link>
+                </div>
+            </div>
+        </section>
 
         <!-- About Section -->
         <section id="about" class="max-w-7xl mx-auto py-20 px-4">

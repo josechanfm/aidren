@@ -8,7 +8,11 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Member\DashboardController;
 use App\Http\Controllers\Member\PortfolioController;
 use App\Http\Controllers\Member\ExperienceController;
-
+use App\Http\Controllers\TopicController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PrivateMessageController;
+use App\Http\Controllers\Admin\NewsController;
+use App\Models\News;
 //use App\Http\Controllers\Auth\PasswordController;
 
 /*
@@ -23,11 +27,14 @@ use App\Http\Controllers\Member\ExperienceController;
 */
 
 Route::get('/', function () {
+    $latestNews = News::latest('published_at')->take(6)->get();
+    
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'news' => $latestNews
     ]);
 })->name('home');
 
@@ -57,10 +64,33 @@ Route::middleware([
     }
 );
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('news', NewsController::class)->names('news');
+    });
+    //Route::get('/user/profile', [ProfileController::class, 'show'])->name('profile.show');
+}
+);
 // Route::post('/user/confirm-password', [PasswordController::class, 'confirm'])
 //     ->name('password.confirm');
 
 // Route::get('/user/profile', [ProfileController::class, 'show'])
 //     ->name('profile.show')
 //     ->middleware(['password.confirm']);
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/forum', [TopicController::class, 'index'])->name('forum');
+    Route::get('/forum/topic/{topic}', [TopicController::class, 'show'])->name('forum.topic');
+    Route::resource('forum/topics', TopicController::class)->names('forum.topics');
+    Route::post('/forum/topic', [TopicController::class, 'store'])->name('forum.topic.store');
+    Route::post('/forum/message', [MessageController::class, 'store'])->name('forum.message.store');
+    Route::get('/messages', [PrivateMessageController::class, 'index'])->name('messages');
+    Route::post('/messages', [PrivateMessageController::class, 'store'])->name('messages.store');
+
+});
 

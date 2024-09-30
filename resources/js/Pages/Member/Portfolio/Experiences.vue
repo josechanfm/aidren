@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useForm, router } from '@inertiajs/vue3';
 import { CheckCircleOutlined } from '@ant-design/icons-vue';
 
-const dateFormat='YYYY-MM-DD';
+const dateFormat = 'YYYY-MM-DD';
 
 const props = defineProps({
   experiences: Array,
@@ -15,7 +15,7 @@ const modalState = ref('CREATE');
 
 const form = useForm({
   id: null,
-  title: '',
+  position: '',
   company: '',
   start_date: '',
   end_date: '',
@@ -145,10 +145,10 @@ const columns = [
     >
       <a-form :model="form" layout="vertical">
         <a-form-item label="Position" name="position">
-          <a-input type="input" v-model:value="form.position" />
+          <a-input v-model:value="form.position" />
         </a-form-item>
         <a-form-item label="Company" name="company">
-          <a-input type="input" v-model:value="form.company" />
+          <a-input v-model:value="form.company" />
         </a-form-item>
         <a-form-item label="Start Date" name="start_date">
           <a-date-picker 
