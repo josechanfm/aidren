@@ -10,8 +10,11 @@ import 'ant-design-vue/dist/reset.css';
 import { i18nVue } from 'laravel-vue-i18n'
 import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
 import  RolePermission  from './Directives/RolePermission.js';
+import { applyPassiveEventListeners } from './passive-events';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+applyPassiveEventListeners();
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

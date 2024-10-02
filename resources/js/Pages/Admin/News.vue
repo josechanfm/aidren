@@ -16,7 +16,7 @@
                     </div>
                     <a-table 
                         :columns="columns" 
-                        :data-source="news.data" 
+                        :data-source="news" 
                         :pagination="pagination"
                         @change="handleTableChange"
                     >

@@ -11,60 +11,88 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::latest()->paginate(10);
+        $news = News::latest()->take(10)->get();
         return Inertia::render('Admin/News', ['news' => $news]);
     }
 
     public function create()
     {
-        return Inertia::render('Admin/NewsCreate');
+        return Inertia::render('Admin/NewsForm',[
+            'news' => (object)[]
+        ]);
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'author' => 'required|max:255',
-            'published_at' => 'required|date',
-            'thumbnail' => 'required|image|max:2048', // 2MB Max
-            'attachments.*' => 'file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:10240', // 10MB Max
-        ]);
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'content' => 'required|string',
+                'author' => 'nullable|string|max:255',
+                'published_at' => 'nullable|date',
+                'thumbnail' => 'nullable|image|max:2048', // 2MB Max
+                'attachments' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,jpg,jpeg,png|max:20480', // 10MB Max
+            ]);
+            $news = News::create($validated);
 
-        $news = News::create($validated);
-
-        if ($request->hasFile('thumbnail')) {
-            $news->addMediaFromRequest('thumbnail')->toMediaCollection('thumbnail');
-        }
-
-        if ($request->hasFile('attachments')) {
-            foreach ($request->file('attachments') as $attachment) {
-                $news->addMedia($attachment)->toMediaCollection('attachments');
+            if ($request->hasFile('thumbnail')) {
+                $news->addMediaFromRequest('thumbnail')->toMediaCollection('thumbnail');
             }
-        }
+            if ($request->hasFile('attachments')) {
+                dd($attachment);
 
-        return redirect()->route('admin.news.index')->with('success', 'News item created successfully.');
+                foreach ($request->file('attachments') as $attachment) {
+                    $news->addMedia($attachment)->toMediaCollection('attachments');
+                }
+            }
+
+            return redirect()->route('admin.news.index')->with('success', 'News item created successfully.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Failed to create news: ' . $e->getMessage()]);
+        }
     }
 
     public function edit(News $news)
     {
-        return Inertia::render('Admin/NewsCreate', [
-            'news' => $news
+        //dd($news);
+        return Inertia::render('Admin/NewsForm', [
+            'news' => $news // This will include any associated media
         ]);
     }
 
     public function update(Request $request, News $news)
     {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'author' => 'required|max:255',
-            'published_at' => 'required|date',
-        ]);
+        try {
+            $validated = $request->validate([
+                'title' => 'required|max:255',
+                'content' => 'required',
+                'author' => 'nullable|max:255',
+                'published_at' => 'nullable|date',
+                'thumbnail' => 'nullable|image|max:2048', // 2MB Max
+                'attachments' => 'nullable|array',
+                'attachments.*' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,png,jpg,jpeg|max:20480', // 20MB Max
+            ]);
 
-        $news->update($validated);
+            $news->update($validated);
 
-        return redirect()->route('news.index')->with('success', 'News updated successfully.');
+            // Handle thumbnail update
+            if ($request->hasFile('thumbnail')) {
+                $news->clearMediaCollection('thumbnail');
+                $news->addMediaFromRequest('thumbnail')->toMediaCollection('thumbnail');
+            }
+            
+            // Handle attachments update
+            if ($request->hasFile('attachments')) {
+                $news->clearMediaCollection('attachments');
+                foreach ($request->file('attachments') as $attachment) {
+                    $news->addMedia($attachment)->toMediaCollection('attachments');
+                }
+            }
+
+            return redirect()->route('admin.news.index')->with('success', 'News updated successfully.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Failed to update news: ' . $e->getMessage()]);
+        }
     }
 
     public function destroy(News $news)

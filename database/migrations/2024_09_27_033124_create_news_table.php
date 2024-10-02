@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->string('author'); // Add this line if it's missing
-            $table->timestamp('published_at');
+            $table->string('author')->nullable(); // Add this line if it's missing
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }

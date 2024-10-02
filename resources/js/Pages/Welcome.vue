@@ -94,15 +94,20 @@ onMounted(() => {
         <section class="py-12 bg-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center mb-8">Latest News</h2>
-                <div class="space-y-6">
-                    <div v-for="item in news" :key="item.id" class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col sm:flex-row">
-                        <div class="sm:w-1/4 md:w-1/5">
-                            <img :src="item.image" :alt="item.title" class="w-full h-48 sm:h-full object-cover">
-                        </div>
-                        <div class="p-4 sm:w-3/4 md:w-4/5">
-                            <h3 class="font-bold text-xl mb-2">{{ item.title }}</h3>
-                            <p class="text-gray-600 mb-4">{{ item.content }}</p>
-                            <a :href="route('admin.news.show', item.id)" class="text-blue-500 hover:underline">Read more</a>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div v-for="item in news" :key="item.id" class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img 
+                            :src="item.media && item.media.length > 0 ? item.media[0].original_url : '/images/logo.png'" 
+                            :alt="item.title" 
+                            class="w-full h-48 object-cover"
+                        >
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold mb-2">{{ item.title }}</h3>
+                            <p class="text-gray-600 mb-4">{{ item.content.substring(0, 100) }}...</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">{{ formatDate(item.published_at) }}</span>
+                                <a :href="route('admin.news.show', item.id)" class="text-blue-500 hover:underline">Read more</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -241,3 +246,18 @@ video {
   height: 100%;
 }
 </style>
+
+<script>
+import { defineComponent } from 'vue'
+import { Head, Link } from '@inertiajs/vue3';
+
+export default defineComponent({
+  // ... other parts of the component ...
+
+  methods: {
+    formatDate(date) {
+      return new Date(date).toLocaleDateString()
+    }
+  }
+})
+</script>
