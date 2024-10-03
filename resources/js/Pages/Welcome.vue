@@ -106,14 +106,14 @@ onMounted(() => {
                             <p class="text-gray-600 mb-4">{{ item.content.substring(0, 100) }}...</p>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm text-gray-500">{{ formatDate(item.published_at) }}</span>
-                                <a :href="route('admin.news.show', item.id)" class="text-blue-500 hover:underline">Read more</a>
+                                <a :href="route('news.show', item.id)" class="text-blue-500 hover:underline">Read more</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="text-center mt-8">
                     <inertia-link 
-                        :href="route('admin.news.index')" 
+                        :href="route('news.list')" 
                         class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                     >
                         View All News

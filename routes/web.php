@@ -8,9 +8,6 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Member\DashboardController;
 use App\Http\Controllers\Member\PortfolioController;
 use App\Http\Controllers\Member\ExperienceController;
-use App\Http\Controllers\TopicController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\PrivateMessageController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Models\News;
 use App\Http\Controllers\ChatbotController;
@@ -28,19 +25,22 @@ use App\Http\Controllers\ChatbotController;
 |
 */
 
-Route::get('/', function () {
-    $latestNews = News::latest('published_at')->take(6)->get();
+// Route::get('/', function () {
+//     $latestNews = News::latest('published_at')->take(6)->get();
     
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-        'news' => $latestNews
-    ]);
-})->name('home');
-
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//         'news' => $latestNews
+//     ]);
+// })->name('home');
 Route::resource('registration', RegistrationController::class)->names('registration');
+
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/news', [PageController::class, 'newsList'])->name('news.list');
+Route::get('/news/{news}', [PageController::class, 'newsShow'])->name('news.show');
 
 Route::get('/services', [PageController::class, 'servcies'])->name('services');
 Route::get('/mediators', [PageController::class, 'mediators'])->name('mediators');
@@ -55,12 +55,19 @@ Route::middleware([
         'verified',
     ])->group(function () {
         Route::prefix('member')->name('member.')->group(function () {
-            Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
             Route::resource('portfolios', PortfolioController::class)->names('portfolios');
             Route::post('profile', [PortfolioController::class,'profile'])->name('profile');
-
             Route::resource('portfolio/experiences', ExperienceController::class)->names('portfolio.experiences');
             Route::put('portfolio/skills', [PortfolioController::class, 'updateSkills'])->name('portfolio.skills.update');
+
+            Route::get('forum', [App\Http\Controllers\Member\Forum\TopicController::class, 'index'])->name('forum');
+            Route::get('forum/topic/{topic}', [App\Http\Controllers\Member\Forum\TopicController::class, 'show'])->name('forum.topic');
+            Route::resource('forum/topics', App\Http\Controllers\Member\Forum\TopicController::class)->names('forum.topics');
+            Route::post('forum/topic', [App\Http\Controllers\Member\Forum\TopicController::class, 'store'])->name('topic.store');
+
+            Route::resource('forum/topic/{topic}/messages', App\Http\Controllers\Member\Forum\MessageController::class)->names('topic.messages');
+    
         });
         //Route::get('/user/profile', [ProfileController::class, 'show'])->name('profile.show');
     }
@@ -77,6 +84,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
         Route::resource('news', NewsController::class)->names('news');
     });
     //Route::get('/user/profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -88,16 +96,4 @@ Route::middleware([
 // Route::get('/user/profile', [ProfileController::class, 'show'])
 //     ->name('profile.show')
 //     ->middleware(['password.confirm']);
-
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/forum', [TopicController::class, 'index'])->name('forum');
-    Route::get('/forum/topic/{topic}', [TopicController::class, 'show'])->name('forum.topic');
-    Route::resource('forum/topics', TopicController::class)->names('forum.topics');
-    Route::post('/forum/topic', [TopicController::class, 'store'])->name('forum.topic.store');
-    Route::post('/forum/message', [MessageController::class, 'store'])->name('forum.message.store');
-    Route::get('/messages', [PrivateMessageController::class, 'index'])->name('messages');
-    Route::post('/messages', [PrivateMessageController::class, 'store'])->name('messages.store');
-
-});
 

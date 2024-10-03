@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submitMessage" class="mt-4">
     <textarea v-model="content" class="w-full p-2 border rounded" rows="3" placeholder="Write your message..."></textarea>
-    <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Post Message</button>
+    <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Post Message...</button>
   </form>
 </template>
 
@@ -20,7 +20,9 @@ const form = useForm({
 });
 
 function submitMessage() {
-  form.post(route('forum.message.store'), {
+  console.log('submitMessage');
+  console.log(form,topicId);
+  form.post(route('member.forum.messages.store', {topic:topicId}), {
     preserveScroll: true,
     onSuccess: () => {
       emit('message-added', form.data);

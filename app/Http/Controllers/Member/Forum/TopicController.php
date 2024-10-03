@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Member\Forum;
 
+use App\Http\Controllers\Controller;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,16 +12,16 @@ class TopicController extends Controller
     public function index()
     {
         $topics = Topic::with('user')->latest()->get();
-        return Inertia::render('Forum/Index', ['topics' => $topics]);
+        return Inertia::render('Member/Forum/Index', ['topics' => $topics]);
     }
 
     public function show(Topic $topic)
     {
         $topic->load(['messages' => function ($query) {
             $query->orderBy('created_at', 'asc');
-        }, 'messages.user']);
-
-        return Inertia::render('Forum/Topic', [
+        }, 'messages.user', 'messages.replies']);
+        //dd($topic->messages);
+        return Inertia::render('Member/Forum/Topic', [
             'topic' => $topic,
             'messages' => $topic->messages,
             'canEdit' => auth()->user()->can('update', $topic),
@@ -41,6 +42,6 @@ class TopicController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('forum.topic', $topic);
+        return redirect()->route('member.forum.topic', $topic);
     }
 }

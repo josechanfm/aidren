@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Member\Forum;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\PrivateMessage;
 use App\Models\User;

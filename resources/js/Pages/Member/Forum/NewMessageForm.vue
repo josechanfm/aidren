@@ -6,7 +6,7 @@
         <label for="content" class="block text-sm font-medium text-gray-700">Message</label>
         <textarea
           id="content"
-          v-model="form.content"
+          v-model="content"
           rows="4"
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           placeholder="Write your message here..."
@@ -17,7 +17,7 @@
         <button
           type="submit"
           class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          :disabled="form.processing"
+          :disabled="submitting"
         >
           Post Message
         </button>
@@ -26,29 +26,42 @@
   </div>
 </template>
 
-<script setup>
-import { useForm } from '@inertiajs/vue3';
+<script>
+import axios from 'axios';
 
-const props = defineProps({
-  topicId: {
-    type: Number,
-    required: true
+export default {
+  props: {
+    topicId: {
+      type: Number,
+      required: true
+    }
+  },
+  data() {
+    return {
+      content: '',
+      submitting: false
+    }
+  },
+  methods: {
+    submitMessage() {
+      this.submitting = true;
+      axios.post(route('member.topic.messages.store', { topic: this.topicId }), {
+        content: this.content
+      })
+      .then(response => {
+        console.log(response.data);
+        // Assuming the server returns the new message in the response
+        this.$emit('messageSent', response.data);
+        this.content = '';
+      })
+      .catch(error => {
+        console.error('Error posting message:', error);
+        // Handle error (e.g., show error message to user)
+      })
+      .finally(() => {
+        this.submitting = false;
+      });
+    }
   }
-});
-
-const emit = defineEmits(['messageSent']);
-
-const form = useForm({
-  content: ''
-});
-
-const submitMessage = () => {
-  form.post(route('forum.messages.store', props.topicId), {
-    preserveScroll: true,
-    onSuccess: () => {
-      emit('messageSent', form.data());
-      form.reset();
-    },
-  });
-};
+}
 </script>

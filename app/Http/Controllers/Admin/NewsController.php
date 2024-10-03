@@ -11,8 +11,9 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::latest()->take(10)->get();
-        return Inertia::render('Admin/News', ['news' => $news]);
+        return Inertia::render('Admin/News', [
+            'news' => News::paginate(10)
+        ]);
     }
 
     public function create()
@@ -39,13 +40,10 @@ class NewsController extends Controller
                 $news->addMediaFromRequest('thumbnail')->toMediaCollection('thumbnail');
             }
             if ($request->hasFile('attachments')) {
-                dd($attachment);
-
                 foreach ($request->file('attachments') as $attachment) {
                     $news->addMedia($attachment)->toMediaCollection('attachments');
                 }
             }
-
             return redirect()->route('admin.news.index')->with('success', 'News item created successfully.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Failed to create news: ' . $e->getMessage()]);
@@ -83,7 +81,7 @@ class NewsController extends Controller
             
             // Handle attachments update
             if ($request->hasFile('attachments')) {
-                $news->clearMediaCollection('attachments');
+                //$news->clearMediaCollection('attachments');
                 foreach ($request->file('attachments') as $attachment) {
                     $news->addMedia($attachment)->toMediaCollection('attachments');
                 }

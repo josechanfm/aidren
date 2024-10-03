@@ -5,7 +5,6 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
           <h1 class="text-3xl font-bold mb-6">{{ topic.title }}</h1>
-          
           <div class="space-y-6">
             <MessageItem
               v-for="message in messages"
@@ -13,10 +12,10 @@
               :message="message"
               :canEdit="canEdit"
               :canDelete="canDelete"
+              :topicId="topic.id"
               @reply-added="addReply"
             />
           </div>
-
           <NewMessageForm 
             :topicId="topic.id" 
             @message-sent="addMessage"
@@ -47,13 +46,13 @@ function addMessage(newMessage) {
   messages.value.push(newMessage);
 }
 
-function addReply(reply, parentId) {
+function addReply(newReply, parentId) {
   const parentMessage = messages.value.find(m => m.id === parentId);
   if (parentMessage) {
     if (!parentMessage.replies) {
       parentMessage.replies = [];
     }
-    parentMessage.replies.push(reply);
+    parentMessage.replies.push(newReply);
   }
 }
 </script>

@@ -24,7 +24,7 @@ const form = useForm({
 });
 
 function submitTopic() {
-  form.post(route('forum.topic.store'), {
+  form.post(route('member.forum.topic.store'), {
     preserveScroll: true,
     onSuccess: () => {
       emit('topic-added', form.data);

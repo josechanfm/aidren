@@ -10,7 +10,6 @@
         <button v-if="canDelete" @click="deleteMessage" class="text-red-600 hover:text-red-800">Delete</button>
       </div>
     </div>
-
     <div v-if="!isEditing" class="mt-2">
       <p>{{ message.content }}</p>
     </div>
@@ -30,29 +29,24 @@
       <button @click="toggleReplyForm" class="text-blue-600 hover:text-blue-800">Reply</button>
     </div>
 
-    <form v-if="showReplyForm" @submit.prevent="submitReply" class="mt-2">
+    <form v-if="showReplyForm" @submit.prevent="submitReply" class="mt-4">
       <textarea
-        v-model="replyForm.content"
-        class="w-full p-2 border rounded"
+        v-model="replyContent"
         rows="3"
-        placeholder="Write your reply..."
+        class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+        placeholder="Write your reply here..."
+        required
       ></textarea>
-      <div class="mt-2 flex items-center">
-        <label class="inline-flex items-center">
-          <input type="checkbox" v-model="replyForm.isPrivate" class="form-checkbox h-5 w-5 text-blue-600">
-          <span class="ml-2 text-gray-700">Private reply (only visible to message owner)</span>
-        </label>
-      </div>
       <div class="mt-2 flex justify-end">
-        <button 
-          type="submit" 
-          class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          :disabled="submitting"
         >
-          {{ replyForm.isPrivate ? 'Send Private Reply' : 'Post Reply' }}
+          Post Reply
         </button>
       </div>
     </form>
-
     <div v-if="message.replies && message.replies.length > 0" class="mt-4 space-y-4">
       <div v-for="reply in message.replies" :key="reply.id" class="ml-8 bg-gray-50 p-3 rounded">
         <div class="flex justify-between items-start">
@@ -71,15 +65,21 @@
 <script setup>
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import axios from 'axios';
 
 const props = defineProps({
   message: Object,
   canEdit: Boolean,
   canDelete: Boolean,
+  topicId: Number, // Add this prop to receive the topic ID
 });
+
+const emit = defineEmits(['reply-added']);
 
 const isEditing = ref(false);
 const showReplyForm = ref(false);
+const replyContent = ref('');
+const submitting = ref(false);
 
 const editForm = useForm({
   content: props.message.content,
@@ -100,7 +100,7 @@ const cancelEditing = () => {
 };
 
 const submitEdit = () => {
-  editForm.put(route('forum.messages.update', props.message.id), {
+  editForm.put(route('member.forum.messages.update', props.message.id), {
     preserveScroll: true,
     onSuccess: () => {
       isEditing.value = false;
@@ -110,7 +110,7 @@ const submitEdit = () => {
 
 const deleteMessage = () => {
   if (confirm('Are you sure you want to delete this message?')) {
-    useForm().delete(route('forum.messages.destroy', props.message.id));
+    useForm().delete(route('member.forum.messages.destroy', props.message.id));
   }
 };
 
@@ -119,12 +119,24 @@ const toggleReplyForm = () => {
 };
 
 const submitReply = () => {
-  replyForm.post(route('forum.messages.reply', props.message.id), {
-    preserveScroll: true,
-    onSuccess: () => {
-      showReplyForm.value = false;
-      replyForm.reset();
-    },
+  submitting.value = true;
+  console.log(replyContent.value);
+
+  axios.post(route('member.topic.messages.store', { topic: props.topicId }), {
+    content: replyContent.value,
+    parent_id: props.message.id
+  })
+  .then(response => {
+    emit('reply-added', response.data, props.message.id);
+    showReplyForm.value = false;
+    replyContent.value = '';
+  })
+  .catch(error => {
+    console.error('Error posting reply:', error);
+    // Handle error (e.g., show error message to user)
+  })
+  .finally(() => {
+    submitting.value = false;
   });
 };
 </script>

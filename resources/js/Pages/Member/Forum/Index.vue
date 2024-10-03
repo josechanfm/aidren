@@ -35,7 +35,7 @@
           <div class="space-y-4">
             <div v-for="topic in topics" :key="topic.id" class="border p-4 rounded">
               <h2 class="text-xl font-semibold">
-                <inertia-link :href="route('forum.topics.show', topic.id)" class="text-blue-600 hover:text-blue-800">
+                <inertia-link :href="route('member.forum.topics.show', topic.id)" class="text-blue-600 hover:text-blue-800">
                   {{ topic.title }}
                 </inertia-link>
               </h2>
@@ -74,7 +74,7 @@ const toggleNewTopicForm = () => {
 };
 
 const submitNewTopic = () => {
-  form.post(route('topics.store'), {
+  form.post(route('member.topics.store'), {
     preserveScroll: true,
     onSuccess: () => {
       form.reset();

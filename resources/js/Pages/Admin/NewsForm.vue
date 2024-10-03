@@ -35,7 +35,8 @@
                             <a-date-picker
                                 v-model:value="news.published_at"
                                 show-time
-                                format="YYYY-MM-DD HH:mm:ss"
+                                :format="dateFormat"
+                                :valueFormat="dateFormat"
                             />
                         </a-form-item>
 
@@ -122,6 +123,7 @@ export default {
     },
     data() {
         return {
+            dateFormat: 'YYYY-MM-DD',
             uploaded_thumbnail: null,
             uploaded_attachments: null,
             thumbnailList: [],
@@ -196,7 +198,8 @@ export default {
                     },
                 });
             } else {
-                this.news.post(route('admin.news.store'), {
+                console.log(this.news);
+                this.$inertia.post(route('admin.news.store'), this.news, {
                     preserveScroll: true,
                     forceFormData: true,
                     onSuccess: () => message.success('News created successfully'),
@@ -221,7 +224,6 @@ export default {
 }
 
 .ant-input,
-.ant-picker,
 .ant-upload-list,
 .tox-tinymce {
     width: 100% !important;

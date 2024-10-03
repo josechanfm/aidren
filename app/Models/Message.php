@@ -28,6 +28,6 @@ class Message extends Model
 
     public function replies()
     {
-        return $this->hasMany(Message::class, 'parent_id');
+        return $this->hasMany(Message::class, 'parent_id')->with('user');
     }
 }
