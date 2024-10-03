@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member\Forum;
 
 use App\Http\Controllers\Controller;
+use App\Models\Config;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,7 +13,10 @@ class TopicController extends Controller
     public function index()
     {
         $topics = Topic::with('user')->latest()->get();
-        return Inertia::render('Member/Forum/Index', ['topics' => $topics]);
+        return Inertia::render('Member/Forum/Index', [
+            'topics' => $topics,
+            'categories' => Config::item('forum_categories'),
+        ]);
     }
 
     public function show(Topic $topic)
@@ -33,12 +37,14 @@ class TopicController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
+            'category_code' => 'required|string',
         ]);
 
         $topic = Topic::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
+            'category_code' => $validated['category_code'],
             'user_id' => auth()->id(),
         ]);
 

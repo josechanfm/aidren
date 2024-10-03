@@ -9,7 +9,7 @@ class Topic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'user_id'];
+    protected $fillable = ['title', 'description', 'user_id', 'category_code'];
 
     public function user()
     {
