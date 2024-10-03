@@ -63,6 +63,7 @@ Route::middleware([
 
             Route::get('forum', [App\Http\Controllers\Member\Forum\TopicController::class, 'index'])->name('forum');
             Route::get('forum/topic/{topic}', [App\Http\Controllers\Member\Forum\TopicController::class, 'show'])->name('forum.topic');
+            
             Route::resource('forum/topics', App\Http\Controllers\Member\Forum\TopicController::class)->names('forum.topics');
             Route::post('forum/topic', [App\Http\Controllers\Member\Forum\TopicController::class, 'store'])->name('topic.store');
 

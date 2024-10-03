@@ -39,7 +39,7 @@
                   {{ topic.title }}
                 </inertia-link>
               </h2>
-              <p class="text-gray-600">{{ topic.excerpt }}</p>
+              <p class="text-gray-600 mt-2">{{ topic.description }}</p>
               <div class="mt-2 text-sm text-gray-500">
                 Posted by {{ topic.user.name }} | {{ formatDate(topic.created_at) }} | {{ topic.replies_count }} replies
               </div>
