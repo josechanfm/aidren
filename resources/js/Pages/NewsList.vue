@@ -1,8 +1,8 @@
 <template>
-    <AppLayout>
+    <WebLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                News
+                articles
             </h2>
         </template>
 
@@ -10,7 +10,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                     <div class="space-y-6">
-                        <div v-for="item in news.data" :key="item.id" class="flex bg-white shadow-md rounded-lg overflow-hidden">
+                        <div v-for="item in articles.data" :key="item.id" class="flex bg-white shadow-md rounded-lg overflow-hidden">
                             <div class="w-1/4 min-w-[150px]">
                                 <img 
                                     :src="item.media && item.media.length > 0 ? item.media[0].original_url : '/images/logo.png'" 
@@ -25,36 +25,34 @@
                                     <span>{{ formatDate(item.published_at) }}</span>
                                 </div>
                                 <p class="text-gray-600 mb-2">{{ truncateContent(item.content) }}</p>
-                                <Link :href="route('news.show', item.id)" class="text-blue-500 hover:underline">
+                                <inertia-link :href="route('news.show', item.id)" class="text-blue-500 hover:underline">
                                     Read more
-                                </Link>
+                                </inertia-link>
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-6 flex justify-end">
-                        <Pagination :links="news.links" />
+                        <Pagination :links="articles.links" />
                     </div>
                 </div>
             </div>
         </div>
-    </AppLayout>
+    </WebLayout>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import { Link } from '@inertiajs/vue3';
-import AppLayout from '@/Layouts/AppLayout.vue';
+import WebLayout from '@/Layouts/WebLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 
 export default defineComponent({
     components: {
-        AppLayout,
+        WebLayout,
         Pagination,
-        Link,
     },
     props: {
-        news: Object,
+        articles: Object,
     },
     methods: {
         formatDate(date) {

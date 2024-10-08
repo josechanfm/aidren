@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\News;
+use App\Models\Article;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 
@@ -16,18 +16,18 @@ class PageController extends Controller
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
-            'news' => News::with('media')->latest('published_at')->take(6)->get()
+            'news' => Article::where('category','news')->with('media')->latest('published_at')->take(6)->get()
         ]);
 
     }
     public function newsList(Request $request){
         return Inertia::render('NewsList', [
-            'news' => News::with('media')->paginate(10)
+            'articles' => Article::where('category','news')->with('media')->paginate(10)
         ]);
     }
-    public function newsShow(News $news){
+    public function newsShow(Article $article){
         return Inertia::render('NewsShow', [
-            'news' => $news
+            'article' => $article
         ]);
     }
     public function servcies()

@@ -57,8 +57,8 @@ const logout = () => {
                                 </NavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"  v-role="'admin'">
-                                <NavLink :href="route('admin.news.index')" :active="route().current('admin.news.index')">
-                                    News
+                                <NavLink :href="route('admin.articles.index')" :active="route().current('admin.articles.index')">
+                                    Articles
                                 </NavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"  v-role="'admin'">
@@ -200,7 +200,6 @@ const logout = () => {
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
-
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="flex items-center px-4">

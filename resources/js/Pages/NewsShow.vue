@@ -1,8 +1,8 @@
 <template>
-    <AppLayout>
+    <WebLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ news.title }}
+                {{ article.title }}
             </h2>
         </template>
 
@@ -11,21 +11,21 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                     <article>
                         <header class="mb-4">
-                            <h1 class="text-3xl font-bold mb-2">{{ news.title }}</h1>
+                            <h1 class="text-3xl font-bold mb-2">{{ article.title }}</h1>
                             <div class="flex items-center text-sm text-gray-500 mb-2">
-                                <span class="mr-3">{{ news.author }}</span>
-                                <span>{{ formatDate(news.published_at) }}</span>
+                                <span class="mr-3">{{ article.author }}</span>
+                                <span>{{ formatDate(article.published_at) }}</span>
                             </div>
                             <div class="mb-2">
-                                <span v-for="tag in news.tags" :key="tag" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                                <span v-for="tag in article.tags" :key="tag" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
                                     #{{ tag }}
                                 </span>
                             </div>
                         </header>
 
-                        <div class="prose max-w-none mb-8 w-full" v-html="news.content"></div>
+                        <div class="prose max-w-none mb-8 w-full" v-html="article.content"></div>
 
-                        <div v-if="news.media && news.media.length > 0">
+                        <div v-if="article.media && article.media.length > 0">
                             <!-- Image Attachments -->
                             <div v-if="imageAttachments.length > 0">
                                 <h3 class="text-xl font-semibold mb-4">Image Attachments</h3>
@@ -55,26 +55,26 @@
                 </div>
             </div>
         </div>
-    </AppLayout>
+    </WebLayout>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import AppLayout from '@/Layouts/AppLayout.vue';
+import WebLayout from '@/Layouts/WebLayout.vue';
 
 export default defineComponent({
     components: {
-        AppLayout,
+        WebLayout,
     },
     props: {
-        news: Object,
+        article: Object,
     },
     computed: {
         imageAttachments() {
-            return this.news.media.filter(media => this.isImage(media.mime_type));
+            return this.article.media.filter(media => this.isImage(media.mime_type));
         },
         nonImageAttachments() {
-            return this.news.media.filter(media => !this.isImage(media.mime_type));
+            return this.article.media.filter(media => !this.isImage(media.mime_type));
         },
     },
     methods: {

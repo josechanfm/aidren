@@ -8,8 +8,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Member\DashboardController;
 use App\Http\Controllers\Member\PortfolioController;
 use App\Http\Controllers\Member\ExperienceController;
-use App\Http\Controllers\Admin\NewsController;
-use App\Models\News;
+use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\ChatbotController;
 
 //use App\Http\Controllers\Auth\PasswordController;
@@ -40,7 +39,7 @@ Route::resource('registration', RegistrationController::class)->names('registrat
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/news', [PageController::class, 'newsList'])->name('news.list');
-Route::get('/news/{news}', [PageController::class, 'newsShow'])->name('news.show');
+Route::get('/news/{article}', [PageController::class, 'newsShow'])->name('news.show');
 
 Route::get('/services', [PageController::class, 'servcies'])->name('services');
 Route::get('/mediators', [PageController::class, 'mediators'])->name('mediators');
@@ -86,7 +85,7 @@ Route::middleware([
 ])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-        Route::resource('news', NewsController::class)->names('news');
+        Route::resource('articles', ArticleController::class)->names('articles');
     });
     //Route::get('/user/profile', [ProfileController::class, 'show'])->name('profile.show');
 }
