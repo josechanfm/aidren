@@ -26,6 +26,9 @@ class PageController extends Controller
         ]);
     }
     public function newsShow(Article $article){
+        if($article->category!=='news'){
+            return to_route('news.list');
+        }
         return Inertia::render('NewsShow', [
             'article' => $article
         ]);

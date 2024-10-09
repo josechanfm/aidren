@@ -15,8 +15,9 @@
                         </a-button>
                     </div>
                     <a-table 
-                        :columns="columns" 
+                        :rowKey="(record) => record.id"
                         :data-source="articles.data" 
+                        :columns="columns" 
                         :pagination="pagination"
                         @change="handleTableChange"
                     >
@@ -54,25 +55,35 @@ export default {
         AppLayout,
     },
     props: {
+        categories:Object,
         articles: Object,
     },
     data() {
         return {
             columns: [
                 {
+                    title: 'Category',
+                    dataIndex: 'category',
+                    key: 'category',
+                    filters: this.categories,
+                },
+                {
                     title: 'Title',
                     dataIndex: 'title',
                     key: 'title',
+                    sorter: true,
                 },
                 {
                     title: 'Author',
                     dataIndex: 'author',
                     key: 'author',
+                    sorter: true,
                 },
                 {
                     title: 'Published At',
                     dataIndex: 'published_at',
                     key: 'published_at',
+                    sorter: true,
                     customRender: ({ text }) => this.formatDate(text),
                 },
                 {
@@ -103,10 +114,12 @@ export default {
                 minute: '2-digit',
             });
         },
-        handleTableChange(pag) {
+        handleTableChange(page, filters, sorter) {
             this.$inertia.get(route('admin.articles.index'), {
-                page: pag.current,
-                per_page: pag.pageSize,
+                page: page.current,
+                per_page: page.pageSize,
+                filter:filters,
+                sorter:sorter
             }, {
                 preserveState: true,
                 preserveScroll: true,

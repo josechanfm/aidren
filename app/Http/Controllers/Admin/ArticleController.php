@@ -3,33 +3,69 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Config;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Inertia\Inertia;
 
 class ArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        //dd($request->all());
+        $request->validate([
+            'category' => 'array', // Expecting an array of categories for filtering
+            'category.*' => 'string', // Each category should be a string
+            'per_page' => 'integer|min:1|max:100', // Pagination parameter
+        ]);
+        $articles=Article::query();
+        if($request->filter){
+            foreach($request->filter as $field=>$values){
+                //dd($field, $values);
+                if(!is_null($values) && is_array($values)){
+                    $articles=$articles->whereIn($field,$values);
+                }
+            }
+        }
+        if($request->sorter && isset($request->sorter['order'])){
+            // dd($request->sorter['field']);
+            if($request->sorter['order']=='ascend'){
+                $articles->orderBy($request->sorter['field'],'ASC');
+            }
+            if($request->sorter['order']=='descend'){
+                $articles->orderBy($request->sorter['field'],'DESC');
+            }
+        }
+        
+        $categories=Config::item('article_categories');
+        foreach($categories as $i=>$cat){
+            $categories[$i]['text']=$cat['label'];
+            unset($categories[$i]['label']);
+        }
+        
         return Inertia::render('Admin/Articles', [
-            'articles' => Article::paginate(10)
+            'categories'=>$categories,
+            'articles' => $articles->paginate($request->per_page)
         ]);
     }
 
     public function create()
     {
         return Inertia::render('Admin/ArticleForm',[
-            'articles' => (object)[]
+            'categories'=>Config::item('article_categories'),
+            'article' => Article::make()
+            //'article' => (Object)[]
         ]);
     }
 
     public function store(Request $request)
     {
-        try {
+        //dd($request->all());
             $validated = $request->validate([
                 'category'=>'required|string|max:255',
                 'title' => 'required|string|max:255',
-                'content' => 'required|string',
+                'content' => 'nullable|string',
                 'author' => 'nullable|string|max:255',
                 'published_at' => 'nullable|date',
                 'thumbnail' => 'nullable|image|max:2048', // 2MB Max
@@ -46,16 +82,14 @@ class ArticleController extends Controller
                 }
             }
             return redirect()->route('admin.articles.index')->with('success', 'Articles item created successfully.');
-        } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Failed to create article: ' . $e->getMessage()]);
-        }
     }
 
-    public function edit(Articles $article)
+    public function edit(Article $article)
     {
         //dd($article);
         return Inertia::render('Admin/ArticleForm', [
-            'articles' => $article // This will include any associated media
+            'categories'=>Config::item('article_categories'),
+            'article' => $article // This will include any associated media
         ]);
     }
 
@@ -99,6 +133,6 @@ class ArticleController extends Controller
     {
         $article->delete();
 
-        return redirect()->route('articles.index')->with('success', 'Articles deleted successfully.');
+        return redirect()->route('admin.articles.index')->with('success', 'Articles deleted successfully.');
     }
 }

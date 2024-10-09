@@ -12,7 +12,7 @@ class Article extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['title', 'content', 'author', 'published_at'];
+    protected $fillable = ['category','title', 'content', 'author', 'published_at'];
 
     protected $casts = [
         'published_at' => 'datetime',

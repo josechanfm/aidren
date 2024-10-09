@@ -29,5 +29,25 @@ class ConfigSeeder extends Seeder
                 ]
             ]
         );
+        Config::create(
+            ['key'=>'forum_categories','content'=>
+                [
+                    [
+                        "value"=>"article",
+                        "label"=>"Article"
+                    ],
+                    [
+                        "value"=>"news",
+                        "label"=>"News"
+                    ],
+                    [
+                        "value"=>"clause",
+                        "label"=>"Clause"
+                    ]
+                ]
+            ]
+        );
+
+        
     }
 }

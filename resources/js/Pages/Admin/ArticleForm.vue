@@ -10,30 +10,33 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <a-card class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <a-form
-                        :model="news"
+                        :model="article"
                         @finish="submit"
                         :label-col="{ style: { width: '200px' } }"
                         :wrapper-col="{ style: { width: 'calc(100% - 200px)' } }"
                         enctype="multipart/form-data"
                     >
+                        <a-form-item label="Category" name="category" :rules="[{ required: true, message: 'Please input the category!' }]">
+                            <a-select v-model:value="article.category" :options="categories"/>
+                        </a-form-item>
                         <a-form-item label="Title" name="title" :rules="[{ required: true, message: 'Please input the title!' }]">
-                            <a-input type="input" v-model:value="news.title" />
+                            <a-input type="input" v-model:value="article.title" />
                         </a-form-item>
                         <a-form-item label="Content" name="content" :rules="[{ required: true, message: 'Please input the content!' }]">
                             <Editor
                                 :api-key="tinymceApiKey"
                                 :init="editorInit"
-                                v-model="news.content"
+                                v-model="article.content"
                             />
                         </a-form-item>
 
                         <a-form-item label="Author" name="author">
-                            <a-input type="input" v-model:value="news.author" />
+                            <a-input type="input" v-model:value="article.author" />
                         </a-form-item>
 
                         <a-form-item label="Publish Date" name="published_at">
                             <a-date-picker
-                                v-model:value="news.published_at"
+                                v-model:value="article.published_at"
                                 show-time
                                 :format="dateFormat"
                                 :valueFormat="dateFormat"
@@ -63,7 +66,7 @@
                                     </li>
                                 </ol>
                                 <ul>
-                                    <li v-for="attachment in news.attachments" :key="attachment.id">
+                                    <li v-for="attachment in article.attachments" :key="attachment.id">
                                         <img :src="attachment.original_url" width="200">
                                     </li>
                                 </ul>
@@ -90,7 +93,7 @@
                                 <a-button type="primary" html-type="submit">
                                     {{ isEditMode ? 'Update News' : 'Create News' }}
                                 </a-button>
-                                <a-button @click="$inertia.visit(route('admin.news.index'))">
+                                <a-button as="link" :href="route('admin.articles.index')">
                                     Cancel
                                 </a-button>
                             </a-space>
@@ -116,7 +119,8 @@ export default {
         UploadOutlined,
     },
     props: {
-        news: {
+        categories:Object,
+        article: {
             type: Object,
             default: () => ({}),
         },
@@ -140,25 +144,25 @@ export default {
         };
     },
     mounted() {
-        //console.log(this.news.media[0]);
-            this.uploaded_thumbnail = this.news.media?.find(media => media.collection_name === 'thumbnail');
-            this.uploaded_attachments = this.news.media?.filter(media => media.collection_name === 'attachments');
-        this.news.attachments=[];
-        this.news.attachments=[];
+        //console.log(this.article.media[0]);
+        this.uploaded_thumbnail = this.article.media?.find(media => media.collection_name === 'thumbnail');
+        this.uploaded_attachments = this.article.media?.filter(media => media.collection_name === 'attachments');
+        this.article.attachments=[];
+        this.article.attachments=[];
     },
     computed: {
         isEditMode() {
-            return !!this.news.id;
+            return !!this.article.id;
         },
     },
     methods: {
         customThumbnailRequest({ file, onSuccess }) {
-            this.news.thumbnail = file;
+            this.article.thumbnail = file;
             this.thumbnailList = [file];
             onSuccess();
         },
         customAttachmentsRequest({ file, onSuccess }) {
-            this.news.attachments.push(file);
+            this.article.attachments.push(file);
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -187,25 +191,25 @@ export default {
             console.log(this.attachmentsList);
 
             if (this.isEditMode) {
-                this.news._method = 'PATCH';
-                this.$inertia.post(route('admin.news.update', this.news.id), this.news, {
+                this.article._method = 'PATCH';
+                this.$inertia.post(route('admin.articles.update', this.article.id), this.article, {
                     preserveScroll: true,
                     forceFormData: true,
                     onSuccess: () => message.success('News updated successfully'),
                     onError: (errors) => {
                         console.error('Validation errors:', errors);
-                        message.error('Failed to update news. Please check the form and try again.');
+                        message.error('Failed to update article. Please check the form and try again.');
                     },
                 });
             } else {
-                console.log(this.news);
-                this.$inertia.post(route('admin.news.store'), this.news, {
+                console.log(this.article);
+                this.$inertia.post(route('admin.articles.store'), this.article, {
                     preserveScroll: true,
                     forceFormData: true,
                     onSuccess: () => message.success('News created successfully'),
                     onError: (errors) => {
                         console.error('Validation errors:', errors);
-                        message.error('Failed to create news. Please check the form and try again.');
+                        message.error('Failed to create article. Please check the form and try again.');
                     },
                 });
             }
