@@ -30,7 +30,7 @@ class ConfigSeeder extends Seeder
             ]
         );
         Config::create(
-            ['key'=>'forum_categories','content'=>
+            ['key'=>'article_categories','content'=>
                 [
                     [
                         "value"=>"article",

@@ -144,19 +144,19 @@ onMounted(() => {
                 <div class="bg-red-100 min-h-[300px] p-10">
                     <h3 class="text-2xl font-semibold mb-4">Want to discuss working with AIDREN?</h3>
                     <p>Find out how you can become a client and begin acting with confidence that comes from true clarity.</p>
-                    <a href="#" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">CONTACT US</a>
+                    <a href="approach" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">LET'S START</a>
                 </div>
                 <div class="bg-white min-h-[300px] p-10">
                     <h3 class="text-2xl font-semibold mb-4">Interested in becoming a Network Member?</h3>
                     <p>The world's leading organizations trust our network of experts to help them move forward. AIDREN Network Members get to shape the direction of progress.</p>
-                    <a href="#" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">GET START</a>
+                    <a href="mediators" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">BECOME MEMBER</a>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                 <div class="bg-slate-500 text-white p-10 min-h-[300px]">
                     <h3 class="text-2xl font-semibold mb-4">Interested in working for AIDREN?</h3>
-                    <p>AIDREN is hiring for critical roles. Check out our careers page and be a part of bringing the power of insight to every great professional decision.</p>
-                    <a href="#" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">BROWSE OPEN POSITIONS</a>
+                    <p>We have compiled a selection of recommended clauses for mediation to serve as helpful references. These clauses aim to facilitate effective communication and resolution between parties. Explore these options to enhance your mediation process.</p>
+                    <a href="clauses" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">LEARN MORE</a>
                 </div>
                 <div class="bg-green-100 min-h-[300px] bg-cover bg-center" :style="{ backgroundImage: 'url(/images/image3.jpg)' }"></div>
                 <div class="bg-stash-400 min-h-[300px]">
@@ -164,7 +164,7 @@ onMounted(() => {
                     <div class="bg-gray-900 py-2 px-10 text-white h-1/2">
                         <h3 class="text-2xl font-semibold mb-1">What does AIDREN do?</h3>
                         <p class="mb-2">AIDREN is The World's Insight Network, bringing decision makers the insight it takes to get ahead.</p>
-                        <a href="#" class="inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">BROWSE OPEN POSITIONS</a>
+                        <a href="about-us" class="inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">ABOUT US</a>
                     </div>
                 </div>
             </div>
@@ -195,12 +195,21 @@ onMounted(() => {
             </div>
         </section>
 
+        <!-- Clause Section -->
+        <section id="contact" class="max-w-7xl mx-auto py-20 px-4">
+            <h2 class="text-3xl font-bold text-center text-amber-800">Recommended Clause for Mediation</h2>
+            <p class="mt-4 text-gray-600 text-center">In this section, we have compiled a selection of recommended clauses for mediation to assist you in your dispute resolution process. These clauses are designed to provide clear guidelines and frameworks for effective mediation, ensuring that all parties involved can navigate their discussions constructively. We encourage you to review these clauses as a reference to help facilitate smoother negotiations and foster mutual understanding.</p>
+            <div class="mt-6 text-center">
+                <a href="clauses" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">Learn More</a>
+            </div>
+        </section>
+
         <!-- Contact Section -->
         <section id="contact" class="max-w-7xl mx-auto py-20 px-4">
             <h2 class="text-3xl font-bold text-center text-amber-800">Get in Touch</h2>
             <p class="mt-4 text-gray-600 text-center">Have questions? We'd love to hear from you!</p>
             <div class="mt-6 text-center">
-                <a href="mailto:info@disputeexpert.com" class="bg-amber-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-amber-500">Contact Us</a>
+                <a href="mailto:admin@aidren.org" class="bg-amber-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-amber-500">Contact Us</a>
             </div>
         </section>
 

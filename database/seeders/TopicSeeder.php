@@ -13,12 +13,14 @@ class TopicSeeder extends Seeder
         $admin = User::where('email', 'admin@example.com')->first();
 
         Topic::create([
+            'category_code'=>'GENERAL',
             'title' => 'Welcome to our Dispute Resolution Forum',
             'description' => 'Introduce yourself and learn about our community guidelines.',
             'user_id' => $admin->id,
         ]);
 
         Topic::create([
+            'category_code'=>'GENERAL',
             'title' => 'Mediation Techniques',
             'description' => 'Share and discuss effective mediation techniques.',
             'user_id' => $admin->id,

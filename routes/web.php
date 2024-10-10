@@ -40,6 +40,8 @@ Route::resource('registration', RegistrationController::class)->names('registrat
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/news', [PageController::class, 'newsList'])->name('news.list');
 Route::get('/news/{article}', [PageController::class, 'newsShow'])->name('news.show');
+Route::get('/clauses', [PageController::class, 'clauseList'])->name('clause.list');
+Route::get('/clause/{article}', [PageController::class, 'clauseShow'])->name('clause.show');
 
 Route::get('/services', [PageController::class, 'servcies'])->name('services');
 Route::get('/mediators', [PageController::class, 'mediators'])->name('mediators');

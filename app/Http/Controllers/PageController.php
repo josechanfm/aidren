@@ -22,7 +22,7 @@ class PageController extends Controller
     }
     public function newsList(Request $request){
         return Inertia::render('NewsList', [
-            'articles' => Article::where('category','news')->with('media')->paginate(10)
+            'articles' => Article::where('category','news')->with('media')->paginate(5)
         ]);
     }
     public function newsShow(Article $article){
@@ -33,6 +33,21 @@ class PageController extends Controller
             'article' => $article
         ]);
     }
+
+    public function clauseList(Request $request){
+        return Inertia::render('ClauseList', [
+            'articles' => Article::where('category','clause')->with('media')->paginate(6)
+        ]);
+    }
+    public function clauseShow(Article $article){
+        if($article->category!=='clause'){
+            return to_route('clause.list');
+        }
+        return Inertia::render('ClauseShow', [
+            'article' => $article
+        ]);
+    }
+
     public function servcies()
     {
         return Inertia::render('Services');

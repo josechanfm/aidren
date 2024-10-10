@@ -12,6 +12,6 @@ class Config extends Model
     protected $casts=['content'=>'json'];
 
     public static function item($key){
-        return Config::where('key',$key)->first()->content;
+        return Config::where('key',$key)->first()?->content;
     }
 }
