@@ -1,0 +1,1 @@
+import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o,d as r,a as e}from"./app-QC31J3KV.js";const c={},a={class:"flex items-center"};function i(n,s){return o(),r("div",a,s[0]||(s[0]=[e("div",{class:"mr-2"},[e("img",{src:"/images/logo.png",width:"50px"})],-1),e("div",{class:"text-2xl text-gray-800"}," AIDREN ",-1)]))}const d=t(c,[["render",i]]);export{d as A};

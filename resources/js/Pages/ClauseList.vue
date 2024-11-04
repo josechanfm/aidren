@@ -21,7 +21,12 @@
                     <span>{{ formatDate(item.published_at) }}</span>
                   </div>
                   <p class="text-gray-600 mb-2">
-                    {{ truncateContent(item.content) }}
+                    <span v-if="item.intro">
+                      {{ truncateContent(item.intro)}}
+                    </span>
+                    <span v-else>
+                      {{ truncateContent(item.content) }}
+                    </span>
                   </p>
                   <inertia-link
                     :href="route('clause.show', item.id)"
