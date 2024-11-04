@@ -8,11 +8,22 @@ import { Head } from '@inertiajs/vue3';
   <WebLayout>
     <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
       <h1 class="text-4xl font-bold mb-6 text-center">About Us</h1>
-      <p class="text-lg text-gray-700 mb-12 text-center">
-        We are a dedicated team of professional mediators committed to resolving conflicts 
-        and fostering understanding between parties. Our expertise spans various fields, 
-        allowing us to provide tailored mediation services for diverse situations.
+      <p class="text-lg text-gray-700">
+        AIDREN (AI Dispute Resolution Experts' Network) is Hong Kong's first platform focused on resolving financial disputes through artificial intelligence mediators and arbitrators, jointly funded by the Hong Kong University of Science and Technology and the Hong Kong Science Park. This innovative project aims to leverage advanced AI technology to provide efficient and fair solutions for financial disputes.
       </p>
+      <p class="text-lg text-gray-700">
+        Our platform brings together international talents from around the world, each contributing their expertise in their respective fields to support the platform's development. Currently, AIDREN has arbitrators from China and Macau, and our mediators hold qualifications recognized in various regions, including but not limited to Taiwan, Malaysia, Hong Kong, mainland China, Singapore, the UK, and Macau.
+      </p>
+      <p class="text-lg text-gray-700">
+        The financial professionals on the AIDREN platform possess multiple internationally recognized qualifications, including International Financial Advisor from the UK, insurance-related qualifications from Hong Kong and Macau, credit and debt management in Hong Kong and Macau, internationally recognized fintech qualifications, Certified Anti-Money Laundering Specialist from the USA, International Compliance qualifications from the UK, financial planning in Hong Kong, Project Management Professional from the USA, risk and decision-making qualifications, as well as relevant qualifications from the United Nations Global Artificial Intelligence Network.
+      </p>
+      <p class="text-lg text-gray-700">
+        We have applied for the "Mediate First" Star Program by the Hong Kong Department of Justice for 2025 and the Singapore Mediation Accreditation, which will further enhance our influence and recognition in the international mediation and arbitration field.
+      </p>
+      <p class="text-lg text-gray-700">
+        AIDREN is committed to becoming a leader in financial dispute resolution, providing efficient and reliable solutions for our clients through innovative technology and professional services. We look forward to collaborating with more international partners to jointly advance the future development of financial dispute resolution.
+      </p>
+      <!-- <a-button class="mb-12" :href="route('aboutUs',{lang:'zh'})">中文/Chinese</a-button> -->
 
       <!-- Our Mission Section -->
       <div class="flex flex-col md:flex-row items-center mb-16">

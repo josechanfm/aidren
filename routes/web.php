@@ -38,8 +38,8 @@ use App\Http\Controllers\ChatbotController;
 Route::resource('registration', RegistrationController::class)->names('registration');
 
 Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/news', [PageController::class, 'newsList'])->name('news.list');
-Route::get('/news/{article}', [PageController::class, 'newsShow'])->name('news.show');
+Route::get('/articles', [PageController::class, 'articles'])->name('articles');
+Route::get('/article/{article}', [PageController::class, 'article'])->name('article');
 Route::get('/clauses', [PageController::class, 'clauseList'])->name('clause.list');
 Route::get('/clause/{article}', [PageController::class, 'clauseShow'])->name('clause.show');
 

@@ -44,19 +44,27 @@
                         </a-form-item>
 
                         <a-form-item label="Thumbnail" name="thumbnail">
-                            <img v-if="uploaded_thumbnail" :src="uploaded_thumbnail.original_url" width="200"/>
-                            <a-upload
-                                v-else
-                                v-model:file-list="thumbnailList"
-                                :custom-request="customThumbnailRequest"
-                                list-type="picture"
-                                :max-count="1"
-                            >
-                                <a-button>
-                                    <upload-outlined></upload-outlined>
-                                    Select Thumbnail
-                                </a-button>
-                            </a-upload>
+                            <template v-if="uploaded_thumbnail">
+                                <div class="flex items-end">
+                                    <img :src="uploaded_thumbnail.original_url" width="200" class="mr-2" />
+                                    <a class="text-red-500" @click="uploaded_thumbnail=null">
+                                        <DeleteOutlined />
+                                    </a>
+                                </div>
+                            </template>
+                            <template v-else>
+                                <a-upload
+                                    v-model:file-list="thumbnailList"
+                                    :custom-request="customThumbnailRequest"
+                                    list-type="picture"
+                                    :max-count="1"
+                                >
+                                    <a-button>
+                                        <upload-outlined></upload-outlined>
+                                        Select Thumbnail
+                                    </a-button>
+                                </a-upload>
+                            </template>
                         </a-form-item>
                         <a-form-item label="Attachments" name="attachments">
                             <template v-if="uploaded_attachments && uploaded_attachments.length > 0">
@@ -111,12 +119,14 @@ import { useForm } from '@inertiajs/vue3';
 import Editor from '@tinymce/tinymce-vue';
 import { UploadOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
+import { DeleteOutlined } from '@ant-design/icons-vue';
 
 export default {
     components: {
         AppLayout,
         Editor,
         UploadOutlined,
+        DeleteOutlined
     },
     props: {
         categories:Object,

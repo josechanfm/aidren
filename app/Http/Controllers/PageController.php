@@ -20,16 +20,13 @@ class PageController extends Controller
         ]);
 
     }
-    public function newsList(Request $request){
-        return Inertia::render('NewsList', [
+    public function articles(Request $request){
+        return Inertia::render('Articles', [
             'articles' => Article::where('category','news')->with('media')->paginate(5)
         ]);
     }
-    public function newsShow(Article $article){
-        if($article->category!=='news'){
-            return to_route('news.list');
-        }
-        return Inertia::render('NewsShow', [
+    public function article(Article $article){
+        return Inertia::render('Article', [
             'article' => $article
         ]);
     }
@@ -56,8 +53,11 @@ class PageController extends Controller
     {
         return Inertia::render('Mediators');
     }
-    public function aboutUs()
+    public function aboutUs(Request $request)
     {
+        if($request->lang){
+            return Inertia::render('AboutUs_zh');
+        }
         return Inertia::render('AboutUs');
     }
     public function contact()

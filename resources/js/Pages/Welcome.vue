@@ -106,14 +106,14 @@ onMounted(() => {
                             <p class="text-gray-600 mb-4">{{ item.content.substring(0, 100) }}...</p>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm text-gray-500">{{ formatDate(item.published_at) }}</span>
-                                <a :href="route('news.show', item.id)" class="text-blue-500 hover:underline">Read more</a>
+                                <a :href="route('article', item.id)" class="text-blue-500 hover:underline">Read more</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="text-center mt-8">
                     <inertia-link 
-                        :href="route('news.list')" 
+                        :href="route('articles')" 
                         class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                     >
                         View All News
@@ -199,6 +199,10 @@ onMounted(() => {
         <section id="contact" class="max-w-7xl mx-auto py-20 px-4">
             <h2 class="text-3xl font-bold text-center text-amber-800">Recommended Clause for Mediation</h2>
             <p class="mt-4 text-gray-600 text-center">In this section, we have compiled a selection of recommended clauses for mediation to assist you in your dispute resolution process. These clauses are designed to provide clear guidelines and frameworks for effective mediation, ensuring that all parties involved can navigate their discussions constructively. We encourage you to review these clauses as a reference to help facilitate smoother negotiations and foster mutual understanding.</p>
+            <div class="flex justify-center">
+                <img src="/images/mediateFirst.jpg" class="h-32 object-contain mx-2" />
+                <img src="/images/SG_mediationCharter.jpg" class="h-32 object-contain mx-2" />
+            </div>
             <div class="mt-6 text-center">
                 <a href="clauses" class="mt-4 inline-block bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700">Learn More</a>
             </div>
