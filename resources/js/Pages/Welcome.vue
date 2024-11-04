@@ -126,11 +126,16 @@ onMounted(() => {
         <section id="about" class="max-w-7xl mx-auto py-20 px-4">
             <h2 class="text-3xl font-bold text-center text-amber-800">About Us</h2>
             <p class="mt-4 text-gray-600 text-center text-xl">
-                Our AI-powered Dispute Resolution Expert Network connects individuals and organizations with skilled professionals.
-                We leverage cutting-edge technology to streamline the resolution process, making it faster, fairer, and more accessible for everyone.
+                AIDREN (AI Dispute Resolution Experts' Network) is Hong Kong's first platform focused on resolving financial disputes through artificial intelligence mediators and arbitrators, jointly funded by the Hong Kong University of Science and Technology and the Hong Kong Science Park. This innovative project aims to leverage advanced AI technology to provide efficient and fair solutions for financial disputes.
             </p>
-            <p class="mt-4 text-gray-600 text-center text-xl">
-                Endorsed by the Department of Justice of Hong Kong and supported by HK EBRAM.
+
+            <p class="mt-4 text-center text-xl">
+                <inertia-link 
+                    :href="route('aboutUs')" 
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                >
+                    Read More
+                </inertia-link>
             </p>
         </section>
 
